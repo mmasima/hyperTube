@@ -1,5 +1,5 @@
 {
-  "name": "reactexpress",
+  "name": "server",
   "version": "1.0.0",
   "description": "Starter kit for creating React and Express apps",
   "main": "server.js",
@@ -18,5 +18,13 @@
   "dependencies": {
     "concurrently": "^3.5.1",
     "express": "^4.16.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmasima/hyperTube.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mmasima/hyperTube/issues"
+  },
+  "homepage": "https://github.com/mmasima/hyperTube#readme"
 }
