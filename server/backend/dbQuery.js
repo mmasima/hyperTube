@@ -57,7 +57,7 @@ Hypertube.activateAccount = function (token) {
     })
 }
 
-matcha.checkEmailAndUserNameExist = function (username, email) {
+Hypertube.checkEmailAndUserNameExist = function (username, email) {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM users WHERE username=? OR email=?',
             [username, email],

@@ -15,7 +15,7 @@ class Registration extends Component {
         return (
             <div class="container mt-4">
             <h2 class="text-center text-white mb-4" >
-              find your perfect match!
+              Stream movies online
             </h2>
             <div class="row justify-content-center">
               <div class="col-lg-5">
