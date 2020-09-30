@@ -28,10 +28,12 @@ const sessionFunction = function(req, res, next){
     }else{
       console.log('please login to view this page');
       req.flash('message', 'please login to view this page');
-      res.redirect('http://localhost:3000/login');
+      res.redirect('http://localhost:3000/');
     }
   }
-  
+  // view engine setup
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -56,10 +58,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-app.listen(port, () => {
-  console.log("Listening on port" + port)
 });
 
 module.exports = app

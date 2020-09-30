@@ -1,17 +1,48 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+// import {Input} from 'reactstrap'
+import {useHistory} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-class Registration extends Component {
-    constructor(props) {
-        super(props)
 
-        this.state = {
-            username: ''
-        }
+
+function Registration() {
+    const[state, setState] = useState ({
+      userName:'',
+      firstname: "",
+      lastName:"",
+      userEmail: "",
+      userPassword: "",
+      verify: ""
+    })
+    const history = useHistory();
+    const submit = e => {
+        e.preventDefault()
+        console.log(state)
+        fetch('http://localhost:5000/register', {
+            method: 'POST',
+            body: JSON.stringify(state),
+            headers: {'Content-Type': 'application/json'},
+        })
+          .then(res => {
+                console.log(`req successful ${res.status}`);
+                if (res.status === 401)
+                    history.push('/register')
+                else if (res.status === 200)
+                    history.push('/login')
+
+            })
+         .catch(error => console.log(error))
+
+    }  
+    const handleChange = (e) =>{
+        e.persist();
+        debugger
+        setState({
+            ...state,
+            [e.target.name]: e.target.value,
+        });
     }
 
-
-    render() {
         return (
             <div class="container mt-4">
             <h2 class="text-center text-white mb-4" >
@@ -33,7 +64,7 @@ class Registration extends Component {
                       <div class="form-group row">
                         <div class="col-sm-10 col-lg-10">
                           <label for="userName">Name</label>
-                          <input type="text" class="form-control" id="Name" name="Name" placeholder="enter name" required />
+                          <input type="text" class="form-control" id="Name" name="firstName" placeholder="enter name" required />
                         </div>
                       </div>
                       <div class="form-group row">
@@ -56,12 +87,7 @@ class Registration extends Component {
                           <label for="Password">Password</label>
                           <input type="password" class="form-control" id="Password" placeholder="enter Password"
                             name="userPassword" minlength="6" title="Must have digits, caps and small letters"
-                            pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S*" require />
-                        </div>
-                        <div class="col-sm-10 col-lg-6">
-                          <label for="confirmPassword">confirm</label>
-                          <input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter Password"
-                            name="confirmPassword" required />
+                            require />
                         </div>
                       </div>
                   <button type="submit" class="btn btn-secondary">Register!</button>
@@ -73,6 +99,5 @@ class Registration extends Component {
           </div>
         )
     }
-}
 
 export default Registration;
