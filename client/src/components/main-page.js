@@ -43,7 +43,7 @@ class Main extends Component {
   viewMovieInfo = (id) => {
     let filteredMovie;
     this.state.movies.forEach((movie, i) => {
-      if (movie.id == id) {
+      if (movie.id === id) {
         filteredMovie = movie
       }
     })

@@ -6,9 +6,10 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const flash = require('connect-flash')
+var cookieSession = require('cookie-session');
+var cors = require('cors');
 const app = express()
-const port = 5000
+
 
 const registerRouter = require('./routes/register')
 // const usersRouter = require('./routes/users')
@@ -24,6 +25,13 @@ const activateAcc = require('./routes/activateAccount')
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.use(cors());
+
+// app.use(cookieSession({
+//   maxAge:24*60*60*1000,
+//   keys: [key.session.cookieKey]
+// }))
+
 const sessionFunction = function(req, res, next){
     if (req.session.login){
       console.log('Welcome back,' + req.session.username+ '!');
@@ -35,6 +43,7 @@ const sessionFunction = function(req, res, next){
     }
   }
   // view engine setup
+
 
 
 app.use(logger('dev'));

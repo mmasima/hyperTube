@@ -17,7 +17,8 @@ router.post('/', async function (req, res) {
     var lastname = req.body.lastname;
     var email = req.body.email;
     var password = req.body.password;
-    
+    var confirm = req.body.confirm;
+
     console.log(username)
     if (!username || !firstname || !lastname || !email || !password) {
         res.send(401);
@@ -28,7 +29,7 @@ router.post('/', async function (req, res) {
         usernameExists = false;
         try {
             console.log('in try')
-            var check = await db.checkEmailAndUserNameExists(username, email);
+            var check = await db.checkEmailAndUserNameExist(username, email);
             console.log(check)
             check.forEach(element => {
                 console.log('in check')

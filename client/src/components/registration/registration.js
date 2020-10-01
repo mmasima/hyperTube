@@ -12,11 +12,11 @@ function Registration() {
       lastname:"",
       email: "",
       password: "",
+      confirm: ""
     })
     const history = useHistory();
     const submit = e => {
         e.preventDefault()
-        console.log(state)
         fetch('http://localhost:9000/register', {
             method: 'POST',
             body: JSON.stringify(state),
@@ -27,7 +27,9 @@ function Registration() {
                 if (res.status === 401)
                     history.push('/register')
                 else if (res.status === 200)
-                    history.push('/')
+                {
+                  history.push('/')
+                }
 
             })
          .catch(error => console.log(error))
@@ -88,7 +90,14 @@ function Registration() {
                             name="password" onChange={handleChange} title="Must have digits, caps and small letters"
                             require />
                         </div>
+                        <div class="col-sm-10 col-lg-6">
+                          <label for="Password">confirm password</label>
+                          <input value={state.confirm}  type="password" class="form-control" id="password" placeholder="enter Password"
+                            name="confirm" onChange={handleChange} title="Must have digits, caps and small letters"
+                            require />
+                        </div>
                       </div>
+                      
                   <button type="submit" class="btn btn-secondary">Register!</button>
                   </form>
                 </div>
