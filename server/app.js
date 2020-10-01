@@ -21,6 +21,9 @@ const activateAcc = require('./routes/activateAccount')
 // const updateProfile = require('./routes/updateProfile')
 // const logoutRouter = require('./routes/logout')
 
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 const sessionFunction = function(req, res, next){
     if (req.session.login){
       console.log('Welcome back,' + req.session.username+ '!');

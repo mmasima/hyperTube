@@ -2,9 +2,9 @@ var con = require('./connection');
 
 let Hypertube = {};
 
-Hypertube.insertUserInfo = function (username, name, lastname, email, password, token, verify) {
+Hypertube.insertUserInfo = function (username, name, lastname, email, password, token) {
     return new Promise((resolve, reject) => {
-        con.query('INSERT INTO users (username, name,lastname,email,password,token) VALUES(?,?,?,?,?,?,?)',
+        con.query('INSERT INTO users (username, name,lastname,email,password,token,verify) VALUES(?,?,?,?,?,?,?)',
             [username, name, lastname, email, password, token, 'no'],
             (error, result) => {
                 if (error) {
