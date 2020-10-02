@@ -13,7 +13,7 @@ router.get('/', async function (req, res) {
             let user = await db.findUserByToken(token);
             user = user[0];
             await db.activateAccount(user.token);
-            res.redirect('http://localhost:3000/login')
+            res.redirect('http://localhost:3000/')
             
         }
         //res.end();

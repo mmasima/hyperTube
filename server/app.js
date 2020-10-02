@@ -23,7 +23,6 @@ const activateAcc = require('./routes/activateAccount')
 // const logoutRouter = require('./routes/logout')
 
 
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(cors());
 

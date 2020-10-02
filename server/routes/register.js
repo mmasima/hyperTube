@@ -55,8 +55,8 @@ router.post('/', async function (req, res) {
                     var transporter = nodemailer.createTransport({
                         service: 'gmail',
                         auth: {
-                            user: 'phyliciadancer@gmail.com',
-                            pass: 'Abcd@1234'
+                            user: 'wtc.hypertube@gmail.com',
+                            pass: 'SimplePassword'
                         },
                         tls: {
                             rejectUnauthorized: false
@@ -65,13 +65,12 @@ router.post('/', async function (req, res) {
                     token = encodeURIComponent(token)
 
                     var mailOptions = {
-                        from: '  ',
+                        from: ' Hypertube Devs',
                         to: email,
                         subject: ' HyperTube Activation',
-                        text: 'Activate your Hypertube account',
+                        text: 'Hello there, please activate your Hypertube account',
                         html: `<p>activate your account</p>
                             <a href = 'http://localhost:5000/activateAccount/?token=${token}'>here</a>`
-
                     };
 
                     transporter.sendMail(mailOptions, function (error, info) {
@@ -80,7 +79,7 @@ router.post('/', async function (req, res) {
                             res.send(401);
                             res.end()
                         } else {
-
+                            res.redirect('/');
                             console.log('Email sent: ' + info.response);
                         }
                     })

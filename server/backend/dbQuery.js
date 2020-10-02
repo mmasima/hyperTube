@@ -16,6 +16,20 @@ Hypertube.insertUserInfo = function (username, name, lastname, email, password, 
     })
 }
 
+Hypertube.findUserByToken = function(token){
+    return new Promise((resolve, reject) => {
+		con.query('SELECT * FROM users WHERE token=? ',
+            [token],
+			(error, result) => {
+				if (error) {
+					return reject(error);
+				}
+				//console.log(result)
+				return resolve(result);
+			})
+	})
+}
+
 Hypertube.checkUserNameExists = function(username){
     return new Promise((resolve, reject) => {
 		con.query('SELECT * FROM users WHERE username=? ',

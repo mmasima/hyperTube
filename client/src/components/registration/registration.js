@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import {Input} from 'reactstrap'
 import {useHistory} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -17,7 +16,7 @@ function Registration() {
     const history = useHistory();
     const submit = e => {
         e.preventDefault()
-        fetch('http://localhost:9000/register', {
+        fetch('http://localhost:5000/register', {
             method: 'POST',
             body: JSON.stringify(state),
             headers: {'Content-Type': 'application/json'},
