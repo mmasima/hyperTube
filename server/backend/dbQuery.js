@@ -42,6 +42,18 @@ Hypertube.checkUserNameExists = function(username){
 			})
 	})
 }
+Hypertube.checkEmail = function(email) {
+    return new Promise((resolve, reject) => {
+        con.query('SELECT * FROM users WHERE email=? ',
+        [email],
+        (error, result) => {
+            if (error) {
+                return reject(error);
+            }
+            return resolve(result);
+        })
+    })
+}
 
 Hypertube.updateUserPassword = function (password, username) {
     return new Promise((resolve, reject) => {
@@ -55,6 +67,21 @@ Hypertube.updateUserPassword = function (password, username) {
                 return resolve(result);
             })
     })
+}
+
+Hypertube.newToken = function (token, email) {
+	return new Promise((resolve, reject) => {
+		con.query(`UPDATE user SET token=? where email=?`,
+			[token, email],
+			(error, result) => {
+				if (error) {
+					return reject(error);
+				}
+				console.log(result);
+				return resolve(result);
+			})
+	})
+
 }
 
 Hypertube.activateAccount = function (token) {

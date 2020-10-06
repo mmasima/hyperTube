@@ -31,15 +31,15 @@ router.post('/', async function (req, res) {
 
                             if (username == element.username) {
                                 usernameExists = true;
-                                console.log("hello 1");
-                                console.log(username);
+                                req.session.GetId = check[0].id;
+                                req.session.user = check[0]
                                 verify = check[0].verify;
                             }
                         });
                         if (usernameExists == true && verify == 'yes') {
                             console.log("hello 2");
                             console.log(username);
-                            req.session.username = username;
+                            req.session.user = username;
                             res.send(200);
                             res.end()
                             
