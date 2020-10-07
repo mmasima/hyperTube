@@ -4,9 +4,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Registration from './components/registration/registration';
 import VideoPlayer from './components/videoPlayer/videoPlayer';
-// import Main from './components/mainPage/main-page';
+import Main from './components/mainPage/mainPage';
 import Login from './components/login.js/login';
-import Navbar from './components/navbar';
 import ForgotPass from './components/forgotPass/forgotPass';
 import ResetPass from './components/forgotPass/resetPass';
 
@@ -15,8 +14,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar />
         <Router>
+          <Route component={Main} exact path="/mainPage" />
           <Route component={Login} exact path="/" />
           <Route component={Registration} exact path="/Register" />
           <Route component={VideoPlayer} exact path="/Video" />

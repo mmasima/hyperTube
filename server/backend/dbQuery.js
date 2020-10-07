@@ -71,7 +71,7 @@ Hypertube.updateUserPassword = function (password, username) {
 
 Hypertube.newToken = function (token, email) {
 	return new Promise((resolve, reject) => {
-		con.query(`UPDATE user SET token=? where email=?`,
+		con.query(`UPDATE users SET token=? where email=?`,
 			[token, email],
 			(error, result) => {
 				if (error) {

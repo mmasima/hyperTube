@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import Navbar from '../navbar';
 
 function ForgotPass() {
-    const[user, setUser] = useState({
+    const [user, setUser] = useState({
         email: ""
     })
 
@@ -34,18 +35,21 @@ function ForgotPass() {
     }
 
     return (
-        <div className="container mt-5">
-            <div className="row justify-content-center">
-                <div className="col-lg-5">
-                    <div className="card  text-white bg-dark mb-3">
-                        <div className="card-body">
-                            <h5 className="card-title mb-5">enter email address</h5>
-                            <form onSubmit={submit} >
-                                <div className="form-group">
-                                    <input type="email" placeholder="enter email" className="form-control" onChange={handleChange}  name="email" value={user.email} required/>
-                                </div>
-                                <button type="submit" className="btn btn-primary">Submit</button>
-                            </form>
+        <div>
+            <Navbar />
+            <div className="container mt-5">
+                <div className="row justify-content-center">
+                    <div className="col-lg-5">
+                        <div className="card  text-white bg-dark mb-3">
+                            <div className="card-body">
+                                <h5 className="card-title mb-5">enter email address</h5>
+                                <form onSubmit={submit} >
+                                    <div className="form-group">
+                                        <input type="email" placeholder="enter email" className="form-control" onChange={handleChange} name="email" value={user.email} required />
+                                    </div>
+                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

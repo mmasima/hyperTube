@@ -19,38 +19,26 @@ router.post('/', async function (req, res) {
     var password = req.body.password;
     var confirm = req.body.confirm;
 
-    console.log(username)
     if (!username || !firstname || !lastname || !email || !password) {
         res.send(401);
         res.end();
     } else {
-        console.log('in post')
         emailExists = false;
         usernameExists = false;
         try {
-            console.log('in try')
             var check = await db.checkEmailAndUserNameExist(username, email);
-            console.log(check)
             check.forEach(element => {
-                console.log('in check')
                 if (email == element.email) {
-                    console.log('elementemail')
                     emailExists = true;
                 }
-                console.log(element.username)
-                console.log(username)
                 if (username == element.username) {
-                    console.log('username')
                     usernameExists = true;
                 }
             });
             if (usernameExists == false && emailExists == false) {
-                console.log('in if')
                 if (password == confirm) {
-                    console.log('in password')
                     let newPassword = await bcrypt.hash(password, saltRound);
                     var token = crypto.randomBytes(64).toString('base64');
-                    console.log(token)
                      await db.insertUserInfo(username, firstname, lastname, email, newPassword, token);
                     var transporter = nodemailer.createTransport({
                         service: 'gmail',
@@ -75,7 +63,7 @@ router.post('/', async function (req, res) {
 
                     transporter.sendMail(mailOptions, function (error, info) {
                         if (error) {
-                            console.log("email doesn't exists");
+                            console.log("error sending to this email");
                             res.send(401);
                             res.end()
                         } else {
@@ -91,7 +79,7 @@ router.post('/', async function (req, res) {
             }
 
         } catch (error) {
-            console.log("error register ", error.message);
+            console.log(error.message);
             res.redirect('/');
         }
     }
