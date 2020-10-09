@@ -60,6 +60,9 @@ class Main extends Component {
         <nav className="navbar navbar-dark bg-dark">
         <h5 className="navbar-brand">HyperTube</h5>
         <div className="mr-sm-2">
+          <button className="btn btn-secondary mr-2">
+              edit profile
+          </button>
           <button className="btn btn-secondary">
             logout
           </button>

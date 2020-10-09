@@ -15,6 +15,7 @@ var forgotPass = require('./routes/forgotPass')
 var resetPass = require('./routes/resetPass')
 var loginRouter = require('./routes/login')
 var activateAcc = require('./routes/activateAccount')
+var editProfile = require('./routes/editProfile')
 
 app.use(session({
   secret: 'secret',
@@ -48,6 +49,7 @@ app.use('/login', loginRouter);
 app.use('/activateAccount', activateAcc);
 app.use('/forgotPass', forgotPass);
 app.use('/resetPass', resetPass);
+app.use('/editProfile', editProfile);
 
 
 // catch 404 and forward to error handler

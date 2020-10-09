@@ -8,6 +8,7 @@ import Main from './components/mainPage/mainPage';
 import Login from './components/login.js/login';
 import ForgotPass from './components/forgotPass/forgotPass';
 import ResetPass from './components/forgotPass/resetPass';
+import EditProfile from'./components/mainPage/editProfile/editProfile';
 
 
 class App extends Component {
@@ -21,6 +22,8 @@ class App extends Component {
           <Route component={VideoPlayer} exact path="/Video" />
           <Route component={ForgotPass} exact path="/forgotPass" />
           <Route component={ResetPass} exact path="/resetPass" />
+          <Route component={EditProfile} exact path="/EditProfile" />
+
         </Router>
       </div>
     );

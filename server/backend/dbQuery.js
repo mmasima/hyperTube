@@ -68,6 +68,7 @@ Hypertube.updateUserPassword = function (password, username) {
             })
     })
 }
+Hypertube.updateUsername
 
 Hypertube.newToken = function (token, email) {
 	return new Promise((resolve, reject) => {
@@ -107,6 +108,20 @@ Hypertube.checkEmailAndUserNameExist = function (username, email) {
                     return reject(error);
                 }
                 console.log(result)
+                return resolve(result);
+            })
+    })
+
+}
+Hypertube.eidtName = function (username){
+    return new Promise((resolve, reject) => {
+        con.query(`UPDATE users SET usernmame=? WHERE id =?`,
+            [password, username],
+            (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                console.log(result);
                 return resolve(result);
             })
     })

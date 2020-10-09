@@ -42,7 +42,6 @@ router.post('/', async function (req, res) {
                             req.session.user = username;
                             res.send(200);
                             res.end()
-                            
                         } else {
                             console.log('activate your account');
                             res.redirect('/');
