@@ -8,6 +8,7 @@ var session = require('express-session')
 var cookieSession = require('cookie-session');
 var cors = require('cors');
 var app = express()
+var jwt = require('jsonwebtoken');
 
 
 var registerRouter = require('./routes/register')
@@ -17,19 +18,15 @@ var loginRouter = require('./routes/login')
 var activateAcc = require('./routes/activateAccount')
 var editProfile = require('./routes/editProfile')
 
-app.use(session({
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: true
-}));
+
 
 var sessionFunction = function (req, res, next) {
   if (req.session.login) {
-    console.log('Welcome back,' + req.session.username + '!');
+    console.log('Welcome back!');
     next()
   } else {
     console.log('please login to view this page');
-    res.redirect('http://localhost:3000/');
+    res.redirect('/');
   }
 }
 // view engine setup
@@ -42,6 +39,13 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: true
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/register', registerRouter)

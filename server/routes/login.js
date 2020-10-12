@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 var db = require('../backend/dbQuery');
 var bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
+require('dotenv').config(); 
 
 
 router.get('/', function (req, res) {
@@ -31,17 +33,14 @@ router.post('/', async function (req, res) {
 
                             if (username == element.username) {
                                 usernameExists = true;
-                                req.session.GetId = check[0].id;
-                                req.session.user = check[0]
                                 verify = check[0].verify;
                             }
                         });
                         if (usernameExists == true && verify == 'yes') {
-                            console.log("hello 2");
-                            console.log(username);
-                            req.session.user = username;
+                            const user = {name: check};
+                            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+                            res.json({ accessToken: accessToken })
                             res.send(200);
-                            res.end()
                         } else {
                             console.log('activate your account');
                             res.redirect('/');

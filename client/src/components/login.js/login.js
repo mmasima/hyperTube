@@ -21,7 +21,7 @@ const Login = () => {
                 if (res.status === 401)
                     history.push('/')
                 else if (res.status === 200) {
-                    history.push('mainPage')
+                    history.push('editProfile')
                 }
 
             })

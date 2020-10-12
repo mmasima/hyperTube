@@ -61,7 +61,7 @@ class Main extends Component {
         <h5 className="navbar-brand">HyperTube</h5>
         <div className="mr-sm-2">
           <button className="btn btn-secondary mr-2">
-              edit profile
+              <a href="http://localhost:3000/editProfile">edit profile</a> 
           </button>
           <button className="btn btn-secondary">
             logout

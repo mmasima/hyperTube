@@ -32,13 +32,9 @@ router.post("/", async function (req, res) {
         res.end();
   } else {
     if (password === confirm) {
-        console.log('if password are the same')
       try {
-          console.log('we are try')
         let newPassword = await bcrypt.hash(password, saltRound);
-        console.log(token)
         let user = await db.findUserByToken(token);
-        console.log(user)
         user = user[0];
         await db.updateUserPassword(newPassword, user.username);
         res.send(200);
