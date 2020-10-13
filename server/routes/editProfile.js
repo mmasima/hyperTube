@@ -2,23 +2,23 @@ var express = require('express');
 var router = express.Router();
 var db = require('../backend/dbQuery');
 var bcrypt = require("bcrypt");
+var auth = require('../middleware/auth');
 const saltRound = 10;
-
-router.get('/', function (req, res) {
+var id;
+router.get('/', auth, function (req, res) {
+    
+    id = req.id;
     res.render('editProfile')
-    console.log("hello world");
-    console.log(req.session.GetId);
-});
+})
 
-router.post('/', async function (req, res) {
+router.post('/', auth, async function  (req, res) {
     var username = req.body.username;
     var firstname = req.body.firstname;
     var lastname = req.body.lastname;
     var password = req.body.password;
     var confirm = req.body.confirm;
-
-    console.log("hello world!!");
-    console.log(req.session.GetId);
+    console.log("hello world");
+    console.log(id);
 
     if (username == '' && firstname == 'Choose...' && lastname == '' && password == '') {
         res.send(401);
@@ -28,17 +28,17 @@ router.post('/', async function (req, res) {
         if (username != '') {
             var check = await db.checkUserNameExists(username);
             if (check.length == 0) {
-                await db.edituserName(username, req.session.GetId);
+                await db.edituserName(username, id);
             }
             if (firstname != '') {
-                await db.EditFirstName(firstname, req.session.GetId);
+                await db.EditFirstName(firstname, id);
             }
             if (lastname != '') {
-                await db.EditFirstName(firstname, req.session.GetId);
+                await db.EditFirstName(firstname, id);
             }
             if (password != '' && password === confirm) {
                 let newPassword = await bcrypt.hash(password, saltRound);
-                await db.EditPassword(newPassword, req.session.GetId)
+                await db.EditPassword(newPassword, id)
             }
         }
     }

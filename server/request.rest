@@ -1,11 +1,11 @@
 
-
-
-
-POST http://localhost:5000/login
+POST http://localhost:5000/editProfile
 Content-Type: application/json
 
 {
-    "username": "obie",
-    "password": "123"
+    "username": "obie"
 }
+
+###
+
+

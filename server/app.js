@@ -9,7 +9,7 @@ var cookieSession = require('cookie-session');
 var cors = require('cors');
 var app = express()
 var jwt = require('jsonwebtoken');
-
+require('dotenv').config(); 
 
 var registerRouter = require('./routes/register')
 var forgotPass = require('./routes/forgotPass')
@@ -18,20 +18,9 @@ var loginRouter = require('./routes/login')
 var activateAcc = require('./routes/activateAccount')
 var editProfile = require('./routes/editProfile')
 
+//authenticate token
 
-
-var sessionFunction = function (req, res, next) {
-  if (req.session.login) {
-    console.log('Welcome back!');
-    next()
-  } else {
-    console.log('please login to view this page');
-    res.redirect('/');
-  }
-}
 // view engine setup
-
-
 app.set('view engine', 'jade');
 app.use(cors());
 
