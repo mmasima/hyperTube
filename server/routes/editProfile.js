@@ -5,10 +5,13 @@ var bcrypt = require("bcrypt");
 var auth = require('../middleware/auth');
 const saltRound = 10;
 var id;
-router.get('/',  function (req, res) {
-    console/log(req.id);
+
+
+router.get('/', auth,  function (req, res) {
+    console/log(req.decoded);
     id = req.id;
-    res.render('editProfile')
+    
+    res.redirect("http://localhost:3000/editProfile");
 })
 
 router.post('/', auth, async function  (req, res) {
@@ -17,8 +20,7 @@ router.post('/', auth, async function  (req, res) {
     var lastname = req.body.lastname;
     var password = req.body.password;
     var confirm = req.body.confirm;
-    console.log("hello world");
-    console.log(id);
+    id = req.id
 
     if (username == '' && firstname == 'Choose...' && lastname == '' && password == '') {
         res.send(401);

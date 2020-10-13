@@ -6,8 +6,6 @@ var logger = require('morgan')
 var bodyParser = require('body-parser')
 var session = require('express-session')
 var cookieSession = require('cookie-session');
-const passport =require('passport');
-const passportLocal = require('passport-Local').Strategy;
 var cors = require('cors');
 var app = express()
 var jwt = require('jsonwebtoken');
@@ -24,10 +22,7 @@ var editProfile = require('./routes/editProfile')
 
 // view engine setup
 app.set('view engine', 'jade');
-app.use(cors({
-  origin: "http://localhost:3000",
-  Credentials: true
-}));
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());

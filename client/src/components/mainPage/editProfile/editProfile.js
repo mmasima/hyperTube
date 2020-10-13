@@ -11,23 +11,15 @@ function EditProfile() {
         confirm: ""
     })
     var token = JSON.parse(localStorage.getItem("login"));
-    console.log("hello world!!");
-    console.log(token.user)
-    console.log("hello world!!");
-    console.log(`${token.user}`)
     const history = useHistory();
     const submit = e => {
-        console.log("hello world!!");
-        console.log(token)
-        console.log("hello world!!");
-        console.log(`${token}`)
         e.preventDefault()
         fetch('http://localhost:5000/editProfile', {
             method: 'POST',
             body: JSON.stringify(state),
             headers: {
                 'Content-Type': 'application/json',
-                'x-access-token': `${token}`
+                'x-auth-token': `${token.token}`
             },
         })
             .then(res => {

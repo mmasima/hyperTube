@@ -22,12 +22,12 @@ const Login = () => {
                 if (res.status === 401)
                     history.push('/')
                 else if (res.status === 200) {
+                    console.log("hello 1")
                     res.json().then((result) => {
+                        console.log("hello 2")
                         localStorage.setItem('login', JSON.stringify({
-                            login: true,
                             user: result.user,
                             token: result.token
-
                         }))
                         history.push('editProfile');
 
