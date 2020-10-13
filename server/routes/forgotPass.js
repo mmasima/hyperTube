@@ -1,7 +1,7 @@
 var express = require('express');
 var crypto = require('crypto');
 var router = express.Router();
-var db = require('../backend/dbQuery');
+var db = require('../model/dbQuery');
 var nodemailer = require("nodemailer");
 
 router.get('/', function (req, res) {

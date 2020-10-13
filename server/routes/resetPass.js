@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var bcrypt = require("bcrypt");
 //var con = require("../model/connection");
-var db = require('../backend/dbQuery');
+var db = require('../model/dbQuery');
 const saltRound = 10;
 var email;
 var token;

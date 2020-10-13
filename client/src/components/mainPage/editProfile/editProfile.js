@@ -10,13 +10,25 @@ function EditProfile() {
         password: "",
         confirm: ""
     })
+    var token = JSON.parse(localStorage.getItem("login"));
+    console.log("hello world!!");
+    console.log(token.user)
+    console.log("hello world!!");
+    console.log(`${token.user}`)
     const history = useHistory();
     const submit = e => {
+        console.log("hello world!!");
+        console.log(token)
+        console.log("hello world!!");
+        console.log(`${token}`)
         e.preventDefault()
         fetch('http://localhost:5000/editProfile', {
             method: 'POST',
             body: JSON.stringify(state),
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': `${token}`
+            },
         })
             .then(res => {
                 console.log(`req successful ${res.status}`);
@@ -56,33 +68,33 @@ function EditProfile() {
                 <div className="row">
                     <div className="col">
                         <form onSubmit={submit}>
-                            <div class="form-row">
-                                <div class="col-md-6 mb-3">
+                            <div className="form-row">
+                                <div className="col-md-6 mb-3">
                                     <label for="validationCustom01">change username</label>
-                                    <input type="text" class="form-control" id="validationCustom01" name="username" value={state.username} onChange={handleChange}  />
+                                    <input type="text" className="form-control" id="validationCustom01" name="username" value={state.username} onChange={handleChange} />
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="col-md-6 mb-3">
+                            <div className="form-row">
+                                <div className="col-md-6 mb-3">
                                     <label for="validationCustom01">change First name</label>
-                                    <input type="text" class="form-control" id="validationCustom01" name="firstname" value={state.firstname} onChange={handleChange}  />
+                                    <input type="text" className="form-control" id="validationCustom01" name="firstname" value={state.firstname} onChange={handleChange} />
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div className="col-md-6 mb-3">
                                     <label for="validationCustom02">change Last name</label>
-                                    <input type="text" class="form-control" id="validationCustom02" name="lastname" value={state.lastname} onChange={handleChange}  />
+                                    <input type="text" className="form-control" id="validationCustom02" name="lastname" value={state.lastname} onChange={handleChange} />
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="col-md-6 mb-3">
+                            <div className="form-row">
+                                <div className="col-md-6 mb-3">
                                     <label for="validationCustom01">change password</label>
-                                    <input type="text" class="form-control" id="validationCustom01" name="password" value={state.password} onChange={handleChange}  />
+                                    <input type="text" className="form-control" id="validationCustom01" name="password" value={state.password} onChange={handleChange} />
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div className="col-md-6 mb-3">
                                     <label for="validationCustom02">confirm new password</label>
-                                    <input type="text" class="form-control" id="validationCustom02" name="confirm" value={state.confirm} onChange={handleChange}  />
+                                    <input type="text" className="form-control" id="validationCustom02" name="confirm" value={state.confirm} onChange={handleChange} />
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Submit form</button>
+                            <button className="btn btn-primary" type="submit">Submit form</button>
                         </form>
                     </div>
                 </div>

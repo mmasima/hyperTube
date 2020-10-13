@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../backend/dbQuery');
+var db = require('../model/dbQuery');
 var bcrypt = require("bcrypt");
 var auth = require('../middleware/auth');
 const saltRound = 10;
 var id;
-router.get('/', auth, function (req, res) {
-    
+router.get('/',  function (req, res) {
+    console/log(req.id);
     id = req.id;
     res.render('editProfile')
 })

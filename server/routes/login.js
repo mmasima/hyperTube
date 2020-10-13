@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var db = require('../backend/dbQuery');
+var db = require('../model/dbQuery');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -38,12 +38,16 @@ router.post('/', async function (req, res) {
                         }
                     });
                     if (usernameExists == true && verify == 'yes') {
-                        const user = { name: check };
+                        const user = {
+                            id: check[0].id,
+                            username: check[0].username,
+                            email: check[0].email
+                        };
                         jwt.sign(user, 'secretKey', { expiresIn: '3600' }, (err, token) => {
                             if (err) throw err
                             res.json({
-                                token,
-                                user
+                                user,
+                                token
                             })
                         })
 

@@ -17,14 +17,22 @@ const Login = () => {
             body: JSON.stringify(state),
             headers: { 'Content-Type': 'application/json' },
         })
-            .then(res => {
+            .then((res) => {
                 console.log(`req successful ${res.status}`);
                 if (res.status === 401)
                     history.push('/')
                 else if (res.status === 200) {
-                    history.push('editProfile')
-                }
+                    res.json().then((result) => {
+                        localStorage.setItem('login', JSON.stringify({
+                            login: true,
+                            user: result.user,
+                            token: result.token
 
+                        }))
+                        history.push('editProfile');
+
+                    })
+                }
             })
             .catch(error => console.log(error))
     }

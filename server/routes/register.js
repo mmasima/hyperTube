@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../backend/dbQuery');
+var db = require('../model/dbQuery');
 var bcrypt = require('bcrypt');
 const saltRound = 10;
 var crypto = require('crypto');
