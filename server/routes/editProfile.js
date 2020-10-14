@@ -7,22 +7,22 @@ const saltRound = 10;
 var id;
 
 
-router.get('/', auth,  function (req, res) {
-    console/log(req.decoded);
+router.get('/', auth, function (req, res) {
+    console / log(req.decoded);
     id = req.id;
-    
     res.redirect("http://localhost:3000/editProfile");
 })
 
-router.post('/', auth, async function  (req, res) {
+router.post('/', auth, async function (req, res) {
     var username = req.body.username;
     var firstname = req.body.firstname;
     var lastname = req.body.lastname;
     var password = req.body.password;
     var confirm = req.body.confirm;
-    id = req.id
+    id = req.id;
 
-    if (username == '' && firstname == 'Choose...' && lastname == '' && password == '') {
+
+    if (username === '' && firstname === '' && lastname === '' && password === '' && confirm === '') {
         res.send(401);
         res.send();
     }
@@ -32,16 +32,16 @@ router.post('/', auth, async function  (req, res) {
             if (check.length == 0) {
                 await db.edituserName(username, id);
             }
-            if (firstname != '') {
-                await db.EditFirstName(firstname, id);
-            }
-            if (lastname != '') {
-                await db.EditFirstName(firstname, id);
-            }
-            if (password != '' && password === confirm) {
-                let newPassword = await bcrypt.hash(password, saltRound);
-                await db.EditPassword(newPassword, id)
-            }
+        }
+        if (firstname != '') {
+            await db.EditFirstName(firstname, id);
+        }
+        if (lastname != '') {
+            await db.EditFirstName(firstname, id);
+        }
+        if (password != '' && password === confirm) {
+            let newPassword = await bcrypt.hash(password, saltRound);
+            await db.EditPassword(newPassword, id)
         }
     }
 

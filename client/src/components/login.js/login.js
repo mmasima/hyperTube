@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
+import auth from '../../config/auth';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-
 
 
 const Login = () => {
@@ -22,14 +21,13 @@ const Login = () => {
                 if (res.status === 401)
                     history.push('/')
                 else if (res.status === 200) {
-                    console.log("hello 1")
                     res.json().then((result) => {
-                        console.log("hello 2")
                         localStorage.setItem('login', JSON.stringify({
-                            user: result.user,
                             token: result.token
                         }))
-                        history.push('editProfile');
+                        auth.login(() => {
+                            history.push('mainPage');
+                        })
 
                     })
                 }

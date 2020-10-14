@@ -13,7 +13,6 @@ function auth(req, res, next) {
         });
     }
     try {
-        console.log("hello world 1");
         jwt.verify(token, config.get('jwtSecret'), (err, decoded) => {
             if (err) {
               console.log(err)

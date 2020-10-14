@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { useHistory, withRouter } from 'react-router-dom';
+import auth from '../../../config/auth';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
-function EditProfile() {
+function EditProfile(props) {
     const [state, setState] = useState({
         username: "",
         firstname: "",
@@ -27,7 +28,7 @@ function EditProfile() {
                 if (res.status === 401)
                     history.push('editProfile')
                 else if (res.status === 200) {
-                    history.push('editProfile')
+                    history.push('mainPage')
                 }
 
             })
@@ -41,17 +42,29 @@ function EditProfile() {
             [e.target.name]: e.target.value,
         });
     }
+    
+    const logout = () => {
+        localStorage.removeItem('login');
+        auth.logout(() => {
+            props.history.push("/");
+        });
+    }
 
+    const loggedIn = () => {
+        auth.login(() => {
+          props.history.push('mainPage');
+        })
+      }
 
     return (
         <div>
             <nav className="navbar navbar-dark bg-dark">
                 <h5 className="navbar-brand">HyperTube</h5>
                 <div className="mr-sm-2">
-                    <button className="btn btn-secondary mr-2">
-                        <a href="http://localhost:3000/mainPage">Home</a>
+                    <button className="btn btn-secondary mr-2" onClick={loggedIn}>
+                        Home
                     </button>
-                    <button className="btn btn-secondary">
+                    <button className="btn btn-secondary" onClick={logout}>
                         logout
                     </button>
                 </div>

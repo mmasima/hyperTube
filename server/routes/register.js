@@ -57,7 +57,7 @@ router.post('/', async function (req, res) {
                         to: email,
                         subject: ' HyperTube Activation',
                         text: 'Hello there, please activate your Hypertube account',
-                        html: `<p>activate your account</p>
+                        html: `<p>Hello there, please activate your Hypertube account</p>
                             <a href = 'http://localhost:5000/activateAccount/?token=${token}'>here</a>`
                     };
 

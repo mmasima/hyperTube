@@ -39,14 +39,8 @@ router.post('/', async function (req, res) {
                         }
                     });
                     if (usernameExists == true && verify == 'yes') {
-                        const user = {
-                            id: check[0].id,
-                            username: check[0].username,
-                            email: check[0].email
-                        };
                          var token = jwt.sign({id: check[0].id}, config.get('jwtSecret'), { expiresIn: 3600 });
                             res.status(200).send({
-                                user: check,
                                 token: token
                             });
                         res.end()
