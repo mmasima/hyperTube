@@ -1,3 +1,5 @@
 {
-    "jwtSecret": "JWT_secret"
+    "jwtSecret": "JWT_secret",
+    "GOOGLE_CLIENT_ID": "413586251028-61h4lrk5gro06hjpjk8k0nln3os1oa6b.apps.googleusercontent.com",
+    "GOOGLE_CLIENT_SECRET": "ipJ1ckmw1VQ9-M_Nnhf2pd8C"
 }
