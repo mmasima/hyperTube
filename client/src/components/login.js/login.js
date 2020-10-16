@@ -18,8 +18,10 @@ const Login = () => {
         })
             .then((res) => {
                 console.log(`req successful ${res.status}`);
-                if (res.status === 401)
+                if (res.status === 401){
+                console.log("failed to login");
                     history.push('/')
+                }
                 else if (res.status === 200) {
                     res.json().then((result) => {
                         localStorage.setItem('login', JSON.stringify({
@@ -34,6 +36,32 @@ const Login = () => {
             })
             .catch(error => console.log(error))
     }
+    const google = e => {
+        e.preventDefault()
+        fetch('http://localhost:5000/google', {
+            method: 'POST',
+            body: JSON.stringify(state),
+            headers: { 'Content-Type': 'application/json' },
+            
+        }).then((res) => {
+            if (res.status === 401){
+                console.log("failed to log you in with google");
+            }
+            else if(res.status === 200){
+                res.json().then((result) => {
+                    localStorage.setItem('login', JSON.stringify({
+                        token: result.token
+                    }))
+                    auth.login(() => {
+                        history.push('mainPage');
+                    })
+                })
+            }
+
+        })
+    }
+
+
     const handleChange = (e) => {
         e.persist();
         debugger
@@ -71,6 +99,12 @@ const Login = () => {
                                         <label for="exampleInputPassword1">Password</label>
                                         <input type="password" className="form-control" id="password" name="password" onChange={handleChange} value={state.password}
                                             placeholder="Password" required />
+                                    </div>
+                                    <div className="mt-5 mb-2">
+                                        
+                                        <button className="btn btn-primary" >
+                                            google login
+                                        </button>
                                     </div>
                                     <div className="modal-footer">
                                         <button type="button btn-primary" className="btn btn-secondary">

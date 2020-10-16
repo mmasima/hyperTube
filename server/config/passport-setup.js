@@ -26,6 +26,7 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:5000/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
+    console.log(profile.id);
     /*
      use the profile info (mainly profile id) to check if the user is registerd in ur db
      If yes select the user and pass him to the done callback
