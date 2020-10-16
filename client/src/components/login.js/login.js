@@ -3,7 +3,7 @@ import auth from '../../config/auth';
 import { useHistory } from 'react-router-dom';
 
 
-const Login = () => {
+const Login = (props) => {
     const [state, setState] = useState({
         username: "",
         password: "",
@@ -36,31 +36,6 @@ const Login = () => {
             })
             .catch(error => console.log(error))
     }
-    const google = e => {
-        e.preventDefault()
-        fetch('http://localhost:5000/google', {
-            method: 'POST',
-            body: JSON.stringify(state),
-            headers: { 'Content-Type': 'application/json' },
-            
-        }).then((res) => {
-            if (res.status === 401){
-                console.log("failed to log you in with google");
-            }
-            else if(res.status === 200){
-                res.json().then((result) => {
-                    localStorage.setItem('login', JSON.stringify({
-                        token: result.token
-                    }))
-                    auth.login(() => {
-                        history.push('mainPage');
-                    })
-                })
-            }
-
-        })
-    }
-
 
     const handleChange = (e) => {
         e.persist();
@@ -70,6 +45,12 @@ const Login = () => {
             [e.target.name]: e.target.value,
         });
     }
+
+    const loggedIn = () => {
+        auth.login(() => {
+          props.history.push('mainPage');
+        })
+      }
     return (
 
         <div>
@@ -102,8 +83,10 @@ const Login = () => {
                                     </div>
                                     <div className="mt-5 mb-2">
                                         
-                                        <button className="btn btn-primary" >
-                                            google login
+                                        <button className="btn btn-primary" onClick={loggedIn}>
+                                           <a href="http://localhost:5000/google">
+                                               google login
+                                            </a> 
                                         </button>
                                     </div>
                                     <div className="modal-footer">

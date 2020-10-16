@@ -29,11 +29,12 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
   function (req, res) {
     // Successful authentication, redirect home.
+    console.log("hello 1");
     var token = jwt.sign({ id: req.user.displayName }, config.get('jwtSecret'), { expiresIn: 3600 });
-    res.status(200).send({
-      token: token
-    });
-    res.end()
+    console.log("hello 2");
+    res.cookie('login', token)
+    console.log("hello 3");
+    res.redirect('http://localhost:3000/mainPage')
   }
 );
 
