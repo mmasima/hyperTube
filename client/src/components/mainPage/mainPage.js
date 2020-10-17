@@ -4,6 +4,7 @@ import SearchArea from './SearchArea';
 import MovieList from './MovieList';
 import Pagination from './Pagination';
 import MovieInfo from './MovieInfo';
+import Cookies from 'js-cookie';
 
 class Main extends Component {
   constructor() {
@@ -51,6 +52,7 @@ class Main extends Component {
     this.setState({ currentMovie: filteredMovie })
   }
   logout = (props) => {
+    Cookies.remove("user");
     localStorage.removeItem('login');
     auth.logout(() => {
         this.props.history.push("/");

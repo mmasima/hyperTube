@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import auth from '../../config/auth';
 import { useHistory } from 'react-router-dom';
+import Cookies from 'js-cookie'
 
 
 const Login = (props) => {
@@ -46,6 +47,9 @@ const Login = (props) => {
         });
     }
 
+    const loggedIn = () => {
+        Cookies.set("user", "True");
+    }
     return (
 
         <div>
@@ -78,10 +82,10 @@ const Login = (props) => {
                                     </div>
                                     <div className="mt-5 mb-2">
 
-                                        <button className="btn btn-primary">
-                                            <a href="http://localhost:5000/google">                             
+                                        <button className="btn btn-primary" onClick={loggedIn}>
+                                            <a href="http://localhost:5000/google">
                                                 google login
-                                                </a>                                           
+                                            </a>
                                         </button>
                                     </div>
                                     <div className="modal-footer">
