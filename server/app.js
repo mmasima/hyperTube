@@ -35,7 +35,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieSession({
   name:'hypertube',
-  keys:['keys1', 'keys1']
+  keys:['keys1', 'keys2']
 }))
 app.use(passport.initialize());
 app.use(passport.session());

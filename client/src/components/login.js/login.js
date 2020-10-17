@@ -18,8 +18,8 @@ const Login = (props) => {
         })
             .then((res) => {
                 console.log(`req successful ${res.status}`);
-                if (res.status === 401){
-                console.log("failed to login");
+                if (res.status === 401) {
+                    console.log("failed to login");
                     history.push('/')
                 }
                 else if (res.status === 200) {
@@ -46,11 +46,6 @@ const Login = (props) => {
         });
     }
 
-    const loggedIn = () => {
-        auth.login(() => {
-          props.history.push('mainPage');
-        })
-      }
     return (
 
         <div>
@@ -82,11 +77,11 @@ const Login = (props) => {
                                             placeholder="Password" required />
                                     </div>
                                     <div className="mt-5 mb-2">
-                                        
-                                        <button className="btn btn-primary" onClick={loggedIn}>
-                                           <a href="http://localhost:5000/google">
-                                               google login
-                                            </a> 
+
+                                        <button className="btn btn-primary">
+                                            <a href="http://localhost:5000/google">                             
+                                                google login
+                                                </a>                                           
                                         </button>
                                     </div>
                                     <div className="modal-footer">
