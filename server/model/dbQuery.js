@@ -118,7 +118,7 @@ Hypertube.checkEmailAndUserNameExist = function (username, email) {
 
 Hypertube.uploadImage = async function(image, id){
 	return new Promise((resolve, reject) => {
-		con.query(`UPDATE user SET image=? WHERE id=?`,
+		con.query(`UPDATE users SET image=? WHERE id=?`,
 			[image, id],
 			(error, result) => {
 				if (error) {

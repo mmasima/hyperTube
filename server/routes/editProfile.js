@@ -1,16 +1,17 @@
- var express = require('express');
+var express = require('express');
 var router = express.Router();
 var db = require('../model/dbQuery');
-var bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
+const multer = require('multer');
 var auth = require('../middleware/auth');
+var upload = require('../middleware/imageUpload');
 const saltRound = 10;
 var id;
 
 
 router.get('/', auth, function (req, res) {
-    console / log(req.decoded);
     id = req.id;
-    res.redirect("http://localhost:3000/editProfile");
+    res.render('editProfile')
 })
 
 router.post('/', auth, async function (req, res) {
@@ -43,8 +44,26 @@ router.post('/', auth, async function (req, res) {
             let newPassword = await bcrypt.hash(password, saltRound);
             await db.EditPassword(newPassword, id)
         }
+        res.send
     }
 
+});
+
+router.post('/updateImage', auth, async function (req, res) {
+    upload(req, res, async (err) => {
+        id = req.id;
+        if (err instanceof multer.MulterError) {  
+            res.status(500).send()
+        } else if (err) {
+            res.status(500).send(err);
+        } else {
+            console.log("in the image ", id);
+            var image = req.file;
+            console.log(image);
+            await db.uploadImage(image.filename, id)
+            res.status(200).send()
+        }
+    })
 })
 
 module.exports = router;

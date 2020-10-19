@@ -1,8 +1,8 @@
-var multer = require("multer");
+var multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, '../bin/user_images');
+        cb(null, './bin/user_images');
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname.replace(/^(.*?)((?:\.\w+)+)$/, `$1-${Date.now()}$2`));
@@ -13,8 +13,9 @@ const storage = multer.diskStorage({
 const fileFilter = (req, file, cb) => {
     const filetypes = ['image/png', 'image/jpeg', 'image/gif'];
 
-    if (filetypes.indexOf(file.mimetype) === -1)
+    if (filetypes.indexOf(file.mimetype) === -1){
         return cb(null, false);
+    }
     cb(null, true);
 };
 

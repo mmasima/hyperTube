@@ -25,10 +25,9 @@ function EditProfile(props) {
     }
     const fileUpload = async (e) => {
         e.preventDefault()
-        console.log("hello world1");
-        console.log(state.selectedFile);
+        console.log("please");
         const fd = new FormData();
-        fd.append('image',  state.selectedFile);
+        fd.append('image', state.selectedFile);
         console.log({fd});
         const data = {
             headers: {
@@ -37,7 +36,7 @@ function EditProfile(props) {
 
             }
         }
-        axios.post('http://localhost:5000/uploadImage', fd, data)
+        axios.post('http://localhost:5000/editProfile/updateImage', fd, data)
             .then(res => {
                 console.log(res)
             });

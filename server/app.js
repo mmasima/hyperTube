@@ -21,9 +21,10 @@ var loginRouter = require('./routes/login')
 var activateAcc = require('./routes/activateAccount')
 var editProfile = require('./routes/editProfile')
 var oauth = require('./routes/ouath')
-var uploadImage = require('./routes/uploadImage')
+// var uploadImage = require('./routes/uploadImage')
 
 // view engine setup
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(cors());
 
@@ -54,7 +55,7 @@ app.use('/forgotPass', forgotPass);
 app.use('/resetPass', resetPass);
 app.use('/editProfile', editProfile);
 app.use('/', oauth);
-app.use('/uploadImage', uploadImage);
+// app.use('/uploadImage', uploadImage);
 
 
 // catch 404 and forward to error handler
