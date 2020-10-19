@@ -10,13 +10,14 @@ var connection = mysql.createConnection({
 
 const makeDb = "CREATE DATABASE IF NOT EXISTS Hypertube";
 
-const usersql = "CREATE TABLE IF NOT EXISTS users(\
+const users = "CREATE TABLE IF NOT EXISTS users(\
     id INT AUTO_INCREMENT PRIMARY KEY, \
     username VARCHAR(255) ,\
     name VARCHAR(255),\
     lastname VARCHAR(255),\
     email VARCHAR(255),\
     password VARCHAR(255),\
+    image VARCHAR(255),\
     token VARCHAR(255),\
     verify VARCHAR(3)\
     )";
@@ -38,7 +39,7 @@ const createDB = () => {
 const createTBLs = () => {
     return new Promise((resolve, reject) => {
         conn.query(
-            `${usersql};`,
+            `${users};`,
             (error, result) => {
                 if (error) {
                     return reject(error);

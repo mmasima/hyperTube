@@ -115,6 +115,23 @@ Hypertube.checkEmailAndUserNameExist = function (username, email) {
 }
 
 //-------------edit Profile start-------//
+
+Hypertube.uploadImage = async function(image, id){
+	return new Promise((resolve, reject) => {
+		con.query(`UPDATE user SET image=? WHERE id=?`,
+			[image, id],
+			(error, result) => {
+				if (error) {
+					return reject(error);
+				}
+				console.log(result);
+				return resolve(result);
+			})
+	})
+
+
+}
+
 Hypertube.edituserName = function (username, Id) {
     return new Promise((resolve, reject) => {
         con.query(`UPDATE users SET username=? WHERE id=?`,
