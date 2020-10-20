@@ -81,7 +81,7 @@ function EditProfile(props) {
             props.history.push('mainPage');
         })
     };
-    const userImage = `http://localhost:5000/bin/user_images/${user.user.image}`;
+    const userImage = `http://localhost:5000/images/${user.user.image}`;
     console.log('yebo');
     console.log(userImage);
     return (
@@ -102,7 +102,7 @@ function EditProfile(props) {
                     <div className="col">                       
                         <div className="row justify-content-center">
                         <div className=" col-lg-6 card text-align-center">
-                            <img src={userImage} height="100px" width="100px" className="card-img-top" alt={userImage} />
+                            <img src={userImage} height="200px" width="150px" className="card-img-top" alt={userImage} />
                                 <label >change image</label>
                                 <input type="file" className="form-control" name="image" onChange={fileSelectedHandler} />
                                 <button onClick={fileUpload} className="btn btn-primary mt-5" type="submit">Submit image</button>

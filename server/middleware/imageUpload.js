@@ -2,7 +2,7 @@ var multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, './bin/user_images');
+        cb(null, './public/images');
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname.replace(/^(.*?)((?:\.\w+)+)$/, `$1-${Date.now()}$2`));
