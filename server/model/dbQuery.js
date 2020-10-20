@@ -188,6 +188,21 @@ Hypertube.EditPassword= function (password, Id) {
         )
     })
 }
+
+Hypertube.Getuser = function (id){
+    return new Promise((resolve, reject) => {
+        con.query(`SELECT * FROM users WHERE id=? `,
+            [id],
+            (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                console.log(result);
+                return resolve(result);
+            }
+        )
+    })
+}
 //-------------edit Profile end-------//
 
 

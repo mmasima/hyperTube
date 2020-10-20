@@ -11,7 +11,7 @@ var id;
 
 router.get('/', auth, function (req, res) {
     id = req.id;
-    res.render('editProfile')
+    res.redirect("http://localhost:3000/editProfile");
 })
 
 router.post('/', auth, async function (req, res) {
@@ -44,9 +44,15 @@ router.post('/', auth, async function (req, res) {
             let newPassword = await bcrypt.hash(password, saltRound);
             await db.EditPassword(newPassword, id)
         }
-        res.send
+        res.status(200).send();
     }
 
+});
+
+router.get('/userDetails', auth, async function (req, res) {
+    var ans = await db.Getuser(req.id);
+    res.status(200).send(ans);
+    return ans;
 });
 
 router.post('/updateImage', auth, async function (req, res) {
@@ -57,11 +63,9 @@ router.post('/updateImage', auth, async function (req, res) {
         } else if (err) {
             res.status(500).send(err);
         } else {
-            console.log("in the image ", id);
-            var image = req.file;
-            console.log(image);
-            await db.uploadImage(image.filename, id)
-            res.status(200).send()
+            var profileimage  = req.file;
+            await db.uploadImage(profileimage .filename, id)
+            res.status(200).send();
         }
     })
 })
