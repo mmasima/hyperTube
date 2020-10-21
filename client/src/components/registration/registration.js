@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import registerApi from './registerApi';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -16,11 +17,7 @@ function Registration() {
   const history = useHistory();
   const submit = e => {
     e.preventDefault()
-    fetch('http://localhost:5000/register', {
-      method: 'POST',
-      body: JSON.stringify(state),
-      headers: { 'Content-Type': 'application/json' },
-    })
+    registerApi(state.username, state.firstname, state.lastname, state.email, state.password, state.confirm)
       .then(res => {
         console.log(`req successful ${res.status}`);
         if (res.status === 401)
