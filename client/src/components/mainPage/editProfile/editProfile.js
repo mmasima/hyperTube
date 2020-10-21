@@ -16,14 +16,6 @@ function EditProfile(props) {
     })
     const user = JSON.parse(localStorage.getItem("userDetails"));
     
-    useEffect(() => {
-        profileApis.getUser().then((res) => {
-            localStorage.setItem('userDetails', JSON.stringify({
-                user: res.data[0]
-            }))
-        })
-        
-    }, []);
     const history = useHistory();
 
     // upload image start

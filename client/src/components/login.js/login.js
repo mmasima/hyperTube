@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import auth from '../../config/auth';
 import { useHistory } from 'react-router-dom';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
+import loginApi from './loginApi'
 
 
 const Login = (props) => {
@@ -12,11 +13,7 @@ const Login = (props) => {
     const history = useHistory();
     const submit = e => {
         e.preventDefault()
-        fetch('http://localhost:5000/login', {
-            method: 'POST',
-            body: JSON.stringify(state),
-            headers: { 'Content-Type': 'application/json' },
-        })
+            loginApi(state.username, state.password)
             .then((res) => {
                 console.log(`req successful ${res.status}`);
                 if (res.status === 401) {
@@ -24,16 +21,14 @@ const Login = (props) => {
                     history.push('/')
                 }
                 else if (res.status === 200) {
-                    res.json().then((result) => {
                         localStorage.setItem('login', JSON.stringify({
-                            token: result.token
+                            token: res.data.token
                         }))
                         auth.login(() => {
                             history.push('mainPage');
                         })
 
-                    })
-                }
+                    }
             })
             .catch(error => console.log(error))
     }

@@ -5,6 +5,7 @@ import MovieList from './MovieList';
 import Pagination from './Pagination';
 import MovieInfo from './MovieInfo';
 import Cookies from 'js-cookie';
+import profileApis from './editProfile/ProfileApis'
 
 class Main extends Component {
   constructor() {
@@ -59,6 +60,11 @@ class Main extends Component {
     });
 }
 loggedIn = (props) => {
+  profileApis.getUser().then((res) => {
+    localStorage.setItem('userDetails', JSON.stringify({
+        user: res.data[0]
+    }))
+})
   auth.login(() => {
     this.props.history.push('editProfile');
   })
