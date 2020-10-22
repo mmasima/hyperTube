@@ -1,23 +1,46 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-function VideoPlayer() {
-    return(
-        <div className="container">
-            <div className="row">
-                <div className="col m-auto pt-4">
-                    <h1 className="text-center mb-5">
-                        watch movie
-                    </h1>
-                    <video controls width="100%">
-                        ....
-                        ....
+class Videoplayer extends Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = { apiResponse: "" };
+  }
 
-                        Sorry, your browser doesn't support embedded videos.
-                    </video>
-                </div>
-            </div>
-        </div>
-    )
-}
+callAPI() {
+  fetch("http://localhost:5000/torrent")
+  .then(res => res.text())
+  .then(res => this.setState({ apiResponse: res }))
+  .catch(err => err);
+  }
 
-export default VideoPlayer;
+componentWillMount() {
+    this.callAPI();
+}  
+render(){  
+return (
+  <div class="app">
+  <header>
+      <nav class="navbar navbar-dark bg-dark">
+          <h1 class="navbar-brand">Hype Video</h1>
+      </nav>
+  </header>
+  <div class="container">
+      <div class="row">
+          <div class="col-md-8 m-auto pt-4">
+              <h1 class="text-center mb-5">Watch Movie !</h1>
+              
+              <video controls width="100%">
+                  <source src="http://localhost:5000/torrent" type="video/mp4" ></source>
+
+                  Sorry, your browser doesn't support embedded videos.
+              </video>
+          </div>
+      </div>
+  </div>
+</div>
+  );
+}}
+
+
+export default Videoplayer;
