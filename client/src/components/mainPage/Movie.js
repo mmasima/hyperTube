@@ -7,11 +7,11 @@ const Movie = (props) => {
             <div className="card mt-5">
                 {
                     props.image == null ? <img src={`https://s3-ap-southeast-1.amazonaws.com/upcode/static/default-image.jpg`} className="card-img-top" alt="card image"/> 
-                    : <img src={`http://image.tmdb.org/t/p/w185${props.image}`} className="card-img-top" alt="card image"/>
+                    : <img src={props.image} height="200px" width="150px" className="card-img-top" alt="card image"/>
                 }
                 <div class="card-body">
                     <h5 class="card-title">{props.data.title}</h5>
-                    <p><button class="btn btn-primary" onClick={() => props.viewMovieInfo(props.movieId)}>View Details</button></p>                     
+                    <p><button class="btn btn-primary" onClick={() => props.viewMovieInfo(props)}>View Details</button></p>                     
                 </div>
             </div>
         </div>

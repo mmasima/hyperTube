@@ -22,7 +22,7 @@ class App extends Component {
           <Route component={VideoPlayer} exact path="/Video" />
           <Route component={ForgotPass} exact path="/forgotPass" />
           <Route component={ResetPass} exact path="/resetPass" />
-          <ProtectedRoute component={Main} exact path="/mainPage" />
+          <Route component={Main} exact path="/mainPage" />
           <ProtectedRoute component={EditProfile} exact path="/EditProfile" />
 
         </Switch>
