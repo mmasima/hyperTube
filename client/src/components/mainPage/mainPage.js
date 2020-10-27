@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import auth from '../../config/auth';
 import SearchArea from './SearchArea';
 import MovieList from './MovieList';
@@ -140,10 +140,10 @@ class Main extends Component {
               <div className="card  text-white bg-secondary mb-3">
                 <div className="row no-gutters">
                   <div className="col-md-4">
-                    {this.state.currentMovie.background_image_original == null ? <img className="card-img" src={`https://s3-ap-southeast-1.amazonaws.com/upcode/static/default-image.jpg`} alt="Card image cap" style={{
+                    {this.state.currentMovie.background_image_original == null ? <img className="card-img" src={`https://s3-ap-southeast-1.amazonaws.com/upcode/static/default-image.jpg`} alt="" style={{
                       width: "100%",
                       height: 360
-                    }} /> : <img className="" src={this.state.currentMovie.background_image_original} alt="Card image" style={{
+                    }} /> : <img className="" src={this.state.currentMovie.background_image_original} alt="" style={{
                       width: "100%",
                       height: 360
                     }} />}
@@ -152,7 +152,7 @@ class Main extends Component {
                     <div className="card-body">
                       <h5 className="card-title">{this.state.currentMovie.year}</h5>
                       <React.Fragment>
-                        <ModalVideo channel='custom' url={this.videoplay} autoplay isOpen={this.state.isOpen} onClose={() => this.isOpen = false} />
+                        <ModalVideo channel='custom' height="200px" width="150px" url={this.videoplay} autoplay isOpen={this.state.isOpen} onClose={() => this.isOpen = false} />
                         <button className="btn-primary" onClick={this.MoviePlayable}>Play</button>
                       </React.Fragment>
                       <label >year released</label>

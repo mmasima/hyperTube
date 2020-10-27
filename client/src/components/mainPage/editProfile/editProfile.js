@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory, withRouter } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import auth from '../../../config/auth';
 import profileApis from './ProfileApis';
 import 'bootstrap/dist/css/bootstrap.min.css';

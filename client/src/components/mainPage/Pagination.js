@@ -6,7 +6,7 @@ const Pagination = (props) => {
     for(let i = 1; i <= props.pages + 1; i++) {
         let active = props.currentPage === i ?'active' : '';
 
-        pageLinks.push(<li className={`page-link ${active}`}  onClick={() => props.nextPage(i)}><a href="#">{i}</a></li>)
+        pageLinks.push(<li className={`page-link ${active}`}  onClick={() => props.nextPage(i)}><button className="btn btn-amber">{i}</button></li>)
     }
     return (
         <div className="container">

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {  Route, Switch} from "react-router-dom";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Registration from './components/registration/registration';
-import VideoPlayer from './components/videoPlayer/videoPlayer';
 import Main from './components/mainPage/mainPage';
 import Login from './components/login.js/login';
 import ForgotPass from './components/forgotPass/forgotPass';
@@ -19,7 +18,6 @@ class App extends Component {
         <Switch>
           <Route component={Login} exact path="/" />
           <Route component={Registration} exact path="/Register" />
-          <Route component={VideoPlayer} exact path="/Video" />
           <Route component={ForgotPass} exact path="/forgotPass" />
           <Route component={ResetPass} exact path="/resetPass" />
           <Route component={Main} exact path="/mainPage" />
