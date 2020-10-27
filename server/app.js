@@ -21,7 +21,7 @@ var loginRouter = require('./routes/login')
 var activateAcc = require('./routes/activateAccount')
 var editProfile = require('./routes/editProfile')
 var oauth = require('./routes/ouath')
-// var uploadImage = require('./routes/uploadImage')
+var comments = require('./routes/comments')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -54,6 +54,7 @@ app.use('/activateAccount', activateAcc);
 app.use('/forgotPass', forgotPass);
 app.use('/resetPass', resetPass);
 app.use('/editProfile', editProfile);
+app.use('/comments', comments);
 app.use('/', oauth);
 // app.use('/uploadImage', uploadImage);
 

@@ -22,6 +22,12 @@ const users = "CREATE TABLE IF NOT EXISTS users(\
     verify VARCHAR(3)\
     )";
 
+const comments = `CREATE TABLE IF NOT EXISTS comments(
+        id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        videoId int(11),
+        comment VARCHAR(255)
+      )`
+
 const createDB = () => {
     return new Promise((resolve, reject) => {
         connection.query(makeDb,
@@ -39,6 +45,7 @@ const createDB = () => {
 const createTBLs = () => {
     return new Promise((resolve, reject) => {
         conn.query(
+            `${comments};`,
             `${users};`,
             (error, result) => {
                 if (error) {
