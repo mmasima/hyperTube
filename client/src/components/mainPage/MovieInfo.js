@@ -23,6 +23,11 @@ const MovieInfo = (props) => {
                         <div className="col-md-8">
                             <div className="card-body">
                                 <h5 className="card-title">{props.currentMovie.title}</h5>
+                                <video controls width="90%">
+                                        <source src="http://localhost:9000/testAPI" type="video/mp4" ></source>
+
+                                        Sorry, your browser doesn't support embedded videos.
+                                    </video>
                                 <label >year released</label>
                                 <p className="card-text">{props.currentMovie.year}</p>
                                 <label htmlFor="">rating</label>
@@ -35,6 +40,7 @@ const MovieInfo = (props) => {
                                     <div className="col">
                                         <button className="btn btn-primary">comment</button>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>

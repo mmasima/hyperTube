@@ -1,5 +1,5 @@
 const mysql = require('mysql')
-const conn = require('./connection')
+const con = require('./connection')
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
     multipleStatements: true
 })
 
-const makeDb = "CREATE DATABASE IF NOT EXISTS Hypertube";
+const makeDb = "CREATE DATABASE IF NOT EXISTS Hypertube2";
 
 const users = "CREATE TABLE IF NOT EXISTS users(\
     id INT AUTO_INCREMENT PRIMARY KEY, \
@@ -21,6 +21,18 @@ const users = "CREATE TABLE IF NOT EXISTS users(\
     token VARCHAR(255),\
     verify VARCHAR(3)\
     )";
+
+const video = 'CREATE TABLE IF NOT EXISTS video(\
+    id int(11) AUTO_INCREMENT PRIMARY KEY, \
+    video_id int(11) ,\
+    title VARCHAR(255),\
+    name VARCHAR(255),\
+    ext VARCHAR(255),\
+    videosize VARCHAR(255),\
+    hash VARCHAR(255),\
+    status VARCHAR(255),\
+    views int(42) default 0\
+    )'
 
 const createDB = () => {
     return new Promise((resolve, reject) => {
@@ -38,8 +50,22 @@ const createDB = () => {
 
 const createTBLs = () => {
     return new Promise((resolve, reject) => {
-        conn.query(
+        con.query(
             `${users};`,
+            (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                console.info('Tables created');
+                return resolve(result[0]);
+            });
+    });
+}
+
+const createTBL = () => {
+    return new Promise((resolve, reject) => {
+        con.query(
+            `${video};`,
             (error, result) => {
                 if (error) {
                     return reject(error);
@@ -54,6 +80,7 @@ const setupDb = async () => {
     try {
         await createDB();
         await createTBLs();
+        await createTBL();
     } catch (error) {
         console.error(error.message);
     }

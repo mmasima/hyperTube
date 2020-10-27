@@ -1,4 +1,4 @@
-
+var createError = require('http-errors');
 var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
@@ -21,6 +21,7 @@ var loginRouter = require('./routes/login')
 var activateAcc = require('./routes/activateAccount')
 var editProfile = require('./routes/editProfile')
 var oauth = require('./routes/ouath')
+var torrentRouter = require('./routes/torrent')
 // var uploadImage = require('./routes/uploadImage')
 
 // view engine setup
@@ -54,6 +55,8 @@ app.use('/activateAccount', activateAcc);
 app.use('/forgotPass', forgotPass);
 app.use('/resetPass', resetPass);
 app.use('/editProfile', editProfile);
+app.use('/torrent', torrentRouter);
+app.use('/torrent/mov', torrentRouter);
 app.use('/', oauth);
 // app.use('/uploadImage', uploadImage);
 

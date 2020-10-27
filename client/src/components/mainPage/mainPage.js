@@ -1,12 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { useHistory, withRouter } from 'react-router-dom';
 import auth from '../../config/auth';
 import SearchArea from './SearchArea';
 import MovieList from './MovieList';
+import axios from 'axios';
 import Pagination from './Pagination';
 import MovieInfo from './MovieInfo';
 import Cookies from 'js-cookie';
 import profileApis from './editProfile/ProfileApis'
+
+function Main2({ pap }) {
+  var [moviename2, setMoviename] = useState("")
+
+  return <div onClick={() => setMoviename}>{moviename2}</div>;
+
+}
 
 class Main extends Component {
   constructor() {
@@ -16,15 +24,40 @@ class Main extends Component {
       searchTerm: '',
       totalResults: 0,
       currentPage: 1,
-      currentMovie: null
+      currentMovie: null,
+      moviepath: null,
+      res: null,
+      pap: null
     }
   }
-  // here is the data you need to get the movie torrent
-  download =(props) => {
+
+  catchy = () => () => {
+    //
+    // YOU CAN'T DO THIS
+    // REACT WONT ALLOW YOU
+    //
+    const [moviename3, setMovienname3] = useState("");
+    return <div>{ moviename3 }</div>
+  }
+
+ MyDiv = () => {
+    const [moviename, setMoviename] = this.state.message;
+ 
+    return <div onClick={() => setMoviename(1)}>{moviename}</div>;
+ }
+MyDiv2 = () => {
+  const [video, setVideo] = useState();
+
+  return <div onClick={() => setVideo(1)}>{video}</div>;
+}
+
+  download =(pap) => {
+
     console.log("1 : this is all the movie data you get");
     console.log(this.state.currentMovie);
     console.log("2: this is what you were looking for yesterday")
     //torrent to download
+    console.log(this.state);
     console.log(this.state.currentMovie.torrents);
     //torrent ID
     console.log(this.state.currentMovie.id)
@@ -37,6 +70,15 @@ class Main extends Component {
       .then(data => {
         
         this.setState({ movies: [...data.data.movies], totalResults: data.data.movie_count })
+      })
+  }
+
+  handleSubmit2 = (e) => {
+    e.preventDefault();
+    fetch(`http://localhost:5000/torrent/video`)
+      .then(data => {
+        
+        this.setState({ message: [data.message]});
       })
   }
 
@@ -83,8 +125,35 @@ loggedIn = (props) => {
   closeMovieInfo = () => {
     this.setState({ currentMovie: null });
   }
+  
   render() {
-    const numberPages = Math.floor(this.state.totalResults / 20);
+  const numberPages = Math.floor(this.state.totalResults / 20);
+  const moviename = Main2.data
+  const setVideo = this.MyDiv2.setVideo
+  const setMoviename = this.MyDiv2.setMoviename
+  const MyInlineHook = this.catchy();
+
+  
+    const submit = async e => {
+      await axios.get(`http://localhost:5000/torrent?url=${this.state.currentMovie.torrents[0].url}&id=${this.state.currentMovie.id}&title=${this.state.currentMovie.title}`, {
+        
+      }).then(res => {
+        console.log('res.data', res.data);
+        if (res.data.message) {
+          let videoplay = `http://localhost:5000/torrent/video?movie=${res.data.message}`
+          setVideo(videoplay)
+          let nameonly = res.data.message
+          setMoviename(nameonly.substring(0, nameonly.length - 4) + '.mp4')
+          console.log('moviename', videoplay);
+          console.log('videonnn', nameonly.substring(0, nameonly.length - 4) + '.mp4');
+        }
+        // window.location.reload();
+  
+      })
+        .catch(error => console.log(error))
+    }
+
+
     return (
       <div>
         <nav className="navbar navbar-dark bg-dark">
@@ -108,7 +177,7 @@ loggedIn = (props) => {
           <div className="container">
               <div className="row" onClick={this.closeMovieInfo} style={{ cursor: "pointer", paddingTop: 50 }}>
                   <i class="fas fa-arrow-left"></i>
-                  <span style={{ marginLeft: 10 }}>Go back</span>
+        <span style={{ marginLeft: 10 }}>Go back{this.catchy}</span>
               </div>
               <div className="card  text-white bg-secondary mb-3">
                   <div className="row no-gutters">
@@ -123,7 +192,12 @@ loggedIn = (props) => {
                       </div>
                       <div className="col-md-8">
                           <div className="card-body">
-                              <h5 className="card-title">{this.state.currentMovie.title}</h5>
+                              <h5 className="card-title">{this.state.currentMovie.year}</h5>
+                              <video controls width="90%">
+                  <source src={`http://localhost:5000/torrent/video?movie=${MyInlineHook}`} type="video/mp4" ></source>
+
+                  Sorry, your browser doesn't support embedded videos.
+              </video>
                               <label >year released</label>
                               <p className="card-text">{this.state.currentMovie.year}</p>
                               <label htmlFor="">rating</label>
@@ -136,6 +210,13 @@ loggedIn = (props) => {
                                   <div className="col">
                                       <button className="btn btn-primary">comment</button>
                                   </div>
+                                  <div className="col">
+                                      <button className="btn btn-primary"onClick={submit}>Play</button>
+                                  </div>
+                                  <div className="col">
+                                      <button className="btn btn-primary"onClick={submit}>downloady</button>
+                                  </div>
+                                  <div><MyInlineHook /></div>
                               </div>
                           </div>
                       </div>

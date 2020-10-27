@@ -1,8 +1,8 @@
 var con = require('./connection');
 
-let Hypertube = {};
+let hypertube2 = {};
 
-Hypertube.insertUserInfo = function (username, name, lastname, email, password, token) {
+hypertube2.insertUserInfo = function (username, name, lastname, email, password, token) {
     return new Promise((resolve, reject) => {
         con.query('INSERT INTO users (username, name,lastname,email,password,token,verify) VALUES(?,?,?,?,?,?,?)',
             [username, name, lastname, email, password, token, 'no'],
@@ -16,7 +16,7 @@ Hypertube.insertUserInfo = function (username, name, lastname, email, password, 
     })
 }
 
-Hypertube.findUserByToken = function (token) {
+hypertube2.findUserByToken = function (token) {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM users WHERE token=? ',
             [token],
@@ -30,7 +30,7 @@ Hypertube.findUserByToken = function (token) {
     })
 }
 
-Hypertube.checkUserNameExists = function (username) {
+hypertube2.checkUserNameExists = function (username) {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM users WHERE username=? ',
             [username],
@@ -42,7 +42,7 @@ Hypertube.checkUserNameExists = function (username) {
             })
     })
 }
-Hypertube.checkEmail = function (email) {
+hypertube2.checkEmail = function (email) {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM users WHERE email=? ',
             [email],
@@ -55,7 +55,7 @@ Hypertube.checkEmail = function (email) {
     })
 }
 
-Hypertube.updateUserPassword = function (password, username) {
+hypertube2.updateUserPassword = function (password, username) {
     return new Promise((resolve, reject) => {
         con.query(`UPDATE users SET password=?,token='' WHERE username =?`,
             [password, username],
@@ -68,9 +68,9 @@ Hypertube.updateUserPassword = function (password, username) {
             })
     })
 }
-Hypertube.updateUsername
+hypertube2.updateUsername
 
-Hypertube.newToken = function (token, email) {
+hypertube2.newToken = function (token, email) {
     return new Promise((resolve, reject) => {
         con.query(`UPDATE users SET token=? where email=?`,
             [token, email],
@@ -85,7 +85,7 @@ Hypertube.newToken = function (token, email) {
 
 }
 
-Hypertube.activateAccount = function (token) {
+hypertube2.activateAccount = function (token) {
     return new Promise((resolve, reject) => {
         con.query(`UPDATE users SET verify=?,token='' WHERE token =?`,
             ['yes', token],
@@ -99,7 +99,7 @@ Hypertube.activateAccount = function (token) {
     })
 }
 
-Hypertube.checkEmailAndUserNameExist = function (username, email) {
+hypertube2.checkEmailAndUserNameExist = function (username, email) {
     return new Promise((resolve, reject) => {
         con.query('SELECT * FROM users WHERE username=? OR email=?',
             [username, email],
@@ -116,7 +116,7 @@ Hypertube.checkEmailAndUserNameExist = function (username, email) {
 
 //-------------edit Profile start-------//
 
-Hypertube.uploadImage = async function(image, id){
+hypertube2.uploadImage = async function(image, id){
 	return new Promise((resolve, reject) => {
 		con.query(`UPDATE users SET image=? WHERE id=?`,
 			[image, id],
@@ -132,7 +132,7 @@ Hypertube.uploadImage = async function(image, id){
 
 }
 
-Hypertube.edituserName = function (username, Id) {
+hypertube2.edituserName = function (username, Id) {
     return new Promise((resolve, reject) => {
         con.query(`UPDATE users SET username=? WHERE id=?`,
             [username, Id],
@@ -146,7 +146,7 @@ Hypertube.edituserName = function (username, Id) {
     })
 
 }
-Hypertube.EditFirstName = function (name, Id) {
+hypertube2.EditFirstName = function (name, Id) {
     return new Promise((resolve, reject) => {
         con.query(`UPDATE users SET name=? WHERE id=?`,
             [name, Id],
@@ -160,7 +160,7 @@ Hypertube.EditFirstName = function (name, Id) {
         )
     })
 }
-Hypertube.EditLastName = function (lastName, Id) {
+hypertube2.EditLastName = function (lastName, Id) {
     return new Promise((resolve, reject) => {
         con.query(`UPDATE users SET lastname=? WHERE id=?`,
             [lastName, Id],
@@ -174,7 +174,7 @@ Hypertube.EditLastName = function (lastName, Id) {
         )
     })
 }
-Hypertube.EditPassword= function (password, Id) {
+hypertube2.EditPassword= function (password, Id) {
     return new Promise((resolve, reject) => {
         con.query(`UPDATE users SET password=? WHERE id=?`,
             [password, Id],
@@ -189,7 +189,7 @@ Hypertube.EditPassword= function (password, Id) {
     })
 }
 
-Hypertube.Getuser = function (id){
+hypertube2.Getuser = function (id){
     return new Promise((resolve, reject) => {
         con.query(`SELECT * FROM users WHERE id=? `,
             [id],
@@ -203,7 +203,63 @@ Hypertube.Getuser = function (id){
         )
     })
 }
+
+hypertube2.insertVideoD = function(video_id,title, name, ext, videosize, hash, status){
+    return new Promise((resolve, reject) =>{
+        con.query(`INSERT INTO video (video_id, title, name, ext, videosize, hash, status)
+        VALUES(?,?,?,?,?,?,?)`,
+        [video_id,title, name, ext, videosize, hash, status],
+        (error, result) =>{ 
+            if(error) return reject(error);
+            return resolve(result); 
+        })
+    })
+}
+
+hypertube2.checkvideoExists = function(video_id){
+    return new Promise((resolve, reject) => {
+		con.query('SELECT * FROM video WHERE video_id=? ',
+            [video_id],
+			(error, result) => {
+				if (error) {
+					return reject(error);
+				}
+				//console.log(result)
+				return resolve(result);
+			})
+	})
+}
+
+hypertube2.Updatevideo =async function(status, video_id ){
+	return new Promise((resolve, reject) => {
+		con.query(`UPDATE video SET status=? WHERE video_id=?`,
+			[status,video_id],
+			(error, result) => {
+				if (error) {
+					return reject(error);
+				}
+				console.log(result);
+				return resolve(result);
+			})
+	})
+
+
+}
+
+hypertube2.checkvideoname = async function(video_id){
+    return new Promise((resolve, reject) => {
+		con.query('SELECT name FROM video WHERE video_id=? ',
+            [video_id],
+			(error, result) => {
+				if (error) {
+					return reject(error);
+				}
+				console.log(result)
+				return resolve(result);
+			})
+	})
+}
 //-------------edit Profile end-------//
 
 
-module.exports = Hypertube;
+module.exports = hypertube2;
