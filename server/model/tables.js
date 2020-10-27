@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
     multipleStatements: true
 })
 
-const makeDb = "CREATE DATABASE IF NOT EXISTS Hypertube2";
+const makeDb = "CREATE DATABASE IF NOT EXISTS Hypertube";
 
 const users = "CREATE TABLE IF NOT EXISTS users(\
     id INT AUTO_INCREMENT PRIMARY KEY, \

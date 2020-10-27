@@ -9,7 +9,7 @@ const Pagination = (props) => {
         pageLinks.push(<li className={`page-link ${active}`}  onClick={() => props.nextPage(i)}><button className="btn btn-amber">{i}</button></li>)
     }
     return (
-        <div className="container">
+        <div className="container mt-5">
             <div className="row">
                 <ul className="pagination">
                 { props.currentPage > 1 ? <li className="page-link" onClick={() => props.nextPage(props.currentPage - 1)}><a href="#!">Prev</a></li> : ''}
