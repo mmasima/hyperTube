@@ -110,6 +110,17 @@ class Main extends Component {
     }
   }
 
+  latestMovies = (e) => {
+    e.preventDefault();
+    fetch(`https://yts.mx/api/v2/list_movies.json=?minimum_rating=7`)
+      .then(data => data.json())
+      .then(data => {
+
+        this.setState({ movies: [...data.data.movies], totalResults: data.data.movie_count })
+      })
+  }
+  
+
   render() {
     const numberPages = Math.floor(this.state.totalResults / 20);
     return (
@@ -117,6 +128,9 @@ class Main extends Component {
         <nav className="navbar navbar-dark bg-dark">
           <h5 className="navbar-brand">HyperTube</h5>
           <div className="mr-sm-2">
+          <button className="btn btn-secondary mr-2" onClick={this.latestMovies}>
+              latest Movies
+          </button>
             <button className="btn btn-secondary mr-2" onClick={this.loggedIn}>
               edit profile
           </button>

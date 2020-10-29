@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import auth from '../../../config/auth';
 import profileApis from './ProfileApis';
@@ -14,8 +14,17 @@ function EditProfile(props) {
         confirm: "",
         isLoaded: false
     })
+    useEffect(() => {
+        const test = JSON.parse(localStorage.getItem("userDetails"));
+        if (test === undefined) {
+            setState({ isLoaded: false });
+        }
+        else {
+            setState({ isLoaded: true });
+        }
+    }, []);
     const user = JSON.parse(localStorage.getItem("userDetails"));
-    
+
     const history = useHistory();
 
     // upload image start
@@ -74,8 +83,6 @@ function EditProfile(props) {
         })
     };
     const userImage = `http://localhost:5000/images/${user.user.image}`;
-    console.log('yebo');
-    console.log(userImage);
     return (
         <div>
             <nav className="navbar navbar-dark bg-dark">
@@ -89,60 +96,67 @@ function EditProfile(props) {
                     </button>
                 </div>
             </nav>
+            {   state.isLoaded === false ?
+                <div class="spinner-grow" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            :
             <div className="container mt-5">
                 <div className="row">
-                    <div className="col">                       
+                    <div className="col">
                         <div className="row justify-content-center">
-                        <div className=" col-lg-6 card text-align-center">
-                            <img src={userImage} height="200px" width="150px" className="card-img-top" alt={userImage} />
+                            <div className=" col-lg-6 card text-align-center">
+                                <img src={userImage} height="200px" width="150px" className="card-img-top" alt={userImage} />
                                 <label >change image</label>
                                 <input type="file" className="form-control" name="image" onChange={fileSelectedHandler} />
                                 <button onClick={fileUpload} className="btn btn-primary mt-5" type="submit">Submit image</button>
                                 <div className="card-body mt-2">
-                                <label >username</label>
-                                <h5 className="card-title mt-2">{user.user.username}</h5>
-                                <label >name</label>
-                                <h5 className="card-title mt-2">{user.user.name}</h5>
-                                <label >surname</label>
-                                <h5 className="card-title mt-2">{user.user.lastname}</h5>
-                                <label >email</label>
-                                <h5 className="card-title mt-2">{user.user.email}</h5>
+                                    <label >username</label>
+                                    <h5 className="card-title mt-2">{user.user.username}</h5>
+                                    <label >name</label>
+                                    <h5 className="card-title mt-2">{user.user.name}</h5>
+                                    <label >surname</label>
+                                    <h5 className="card-title mt-2">{user.user.lastname}</h5>
+                                    <label >email</label>
+                                    <h5 className="card-title mt-2">{user.user.email}</h5>
                                 </div>
+                            </div>
                         </div>
-                        </div>
-                            <form onSubmit={submit}>
-                                <div className="form-row">
-                                    <div className="col-md-6 mb-3">
-                                        <label>change username</label>
-                                        <input type="text" className="form-control" id="validationCustom01" name="username" value={state.username} onChange={handleChange} />
-                                    </div>
+                        <form onSubmit={submit}>
+                            <div className="form-row">
+                                <div className="col-md-6 mb-3">
+                                    <label>change username</label>
+                                    <input type="text" className="form-control" id="validationCustom01" name="username" value={state.username} onChange={handleChange} />
                                 </div>
-                                <div className="form-row">
-                                    <div className="col-md-6 mb-3">
-                                        <label >change First name</label>
-                                        <input type="text" className="form-control" id="validationCustom01" name="firstname" value={state.firstname} onChange={handleChange} />
-                                    </div>
-                                    <div className="col-md-6 mb-3">
-                                        <label >change Last name</label>
-                                        <input type="text" className="form-control" id="validationCustom02" name="lastname" value={state.lastname} onChange={handleChange} />
-                                    </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="col-md-6 mb-3">
+                                    <label >change First name</label>
+                                    <input type="text" className="form-control" id="validationCustom01" name="firstname" value={state.firstname} onChange={handleChange} />
                                 </div>
-                                <div className="form-row">
-                                    <div className="col-md-6 mb-3">
-                                        <label >change password</label>
-                                        <input type="text" className="form-control" id="validationCustom01" name="password" value={state.password} onChange={handleChange} />
-                                    </div>
-                                    <div className="col-md-6 mb-3">
-                                        <label >confirm new password</label>
-                                        <input type="text" className="form-control" id="validationCustom02" name="confirm" value={state.confirm} onChange={handleChange} />
-                                    </div>
+                                <div className="col-md-6 mb-3">
+                                    <label >change Last name</label>
+                                    <input type="text" className="form-control" id="validationCustom02" name="lastname" value={state.lastname} onChange={handleChange} />
                                 </div>
-                                <button className="btn btn-primary" type="submit">Submit form</button>
-                            </form>
-                        </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="col-md-6 mb-3">
+                                    <label >change password</label>
+                                    <input type="text" className="form-control" id="validationCustom01" name="password" value={state.password} onChange={handleChange} />
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label >confirm new password</label>
+                                    <input type="text" className="form-control" id="validationCustom02" name="confirm" value={state.confirm} onChange={handleChange} />
+                                </div>
+                            </div>
+                            <button className="btn btn-primary" type="submit">Submit form</button>
+                        </form>
                     </div>
                 </div>
             </div>
+        }
+        </div>
+            
     )
 }
 
