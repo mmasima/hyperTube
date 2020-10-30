@@ -7,20 +7,20 @@ import Pagination from './Pagination';
 import Cookies from 'js-cookie';
 import profileApis from './editProfile/ProfileApis'
 import ModalVideo from 'react-modal-video';
+import mainApi from './mainApi';
 
 
 class Main extends Component {
   constructor() {
     super()
     this.state = {
+      comment: "",
       movies: [],
       searchTerm: '',
       totalResults: 0,
       currentPage: 1,
       currentMovie: null,
       moviepath: null,
-      res: null,
-      pap: null,
       videoname: "",
       videoplay: "",
       setVideo: "",
@@ -60,6 +60,25 @@ class Main extends Component {
 
   handleChange = (e) => {
     this.setState({ searchTerm: e.target.value });
+  }
+
+  changeComment = (e) => {
+    this.setState({ comment: e.target.value })
+  }
+
+  submitComment = (e) => {
+    e.preventDefault()
+    mainApi.submitComment(this.state.currentMovie.id,  this.state.comment)
+      .then((res) => {
+        if (res.status === 401) {
+          console.log("failed to comment")
+          window.location.reload(false);
+        }
+        else if (res.status === 200) {
+          console.log("comment added successfully!")
+          window.location.reload(false);
+        }
+      })
   }
 
   nextPage = (pageNumber) => {
@@ -148,7 +167,7 @@ class Main extends Component {
           <div>
             <div className="container">
               <div className="row" onClick={this.closeMovieInfo} style={{ cursor: "pointer", paddingTop: 50 }}>
-                <i class="fas fa-arrow-left"></i>
+                <i className="fas fa-arrow-left"></i>
                 <span style={{ marginLeft: 10 }}>Go back{this.catchy}</span>
               </div>
               <div className="card  text-white bg-secondary mb-3">
@@ -180,6 +199,10 @@ class Main extends Component {
                         </div>
                         <div className="col">
                           <button className="btn btn-primary">comment</button>
+                        </div>
+                        <div className="col">
+                          <input type='text' name="comment" value={this.comment} onChange={this.changeComment} />
+                          <button type='submit' className="btn btn-primary ml-3" onClick={this.submitComment}>comment</button>
                         </div>
                       </div>
                     </div>

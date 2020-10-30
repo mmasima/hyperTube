@@ -262,4 +262,31 @@ hypertube.checkvideoname = async function(video_id){
 //-------------edit Profile end-------//
 
 
+//-------------comments start-------//
+
+hypertube.comments = function(videoId, comments){
+    return new Promise((resolve, reject) =>{
+        con.query(`INSERT INTO comment(video_id, comment)
+        VALUES(?,?)`,
+        [videoId,comments],
+        (error, result) => {
+            if(error) return reject(error);
+            return resolve(result); 
+        })
+    })
+}
+
+hypertube.getComments = function(){
+    return new Promise((resolve, reject) =>{
+		con.query('SELECT * FROM commment',
+        (error, result) => {
+            if(error) return reject(error);
+            return resolve(result); 
+        })
+    })
+}
+
+//-------------comments end-------/
+
+
 module.exports = hypertube;

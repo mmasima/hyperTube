@@ -22,6 +22,8 @@ var activateAcc = require('./routes/activateAccount')
 var editProfile = require('./routes/editProfile')
 var oauth = require('./routes/ouath')
 var torrentRouter = require('./routes/torrent')
+var comments = require('./routes/comments')
+
 // var uploadImage = require('./routes/uploadImage')
 
 // view engine setup
@@ -58,6 +60,7 @@ app.use('/editProfile', editProfile);
 app.use('/torrent', torrentRouter);
 app.use('/torrent/mov', torrentRouter);
 app.use('/', oauth);
+app.use('/comments', comments);
 // app.use('/uploadImage', uploadImage);
 
 

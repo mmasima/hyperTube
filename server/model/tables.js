@@ -32,7 +32,13 @@ const video = 'CREATE TABLE IF NOT EXISTS video(\
     hash VARCHAR(255),\
     status VARCHAR(255),\
     views int(42) default 0\
-    )'
+    )';
+
+    const comments = 'CREATE TABLE IF NOT EXISTS comment(\
+        id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,\
+        video_id int(11),\
+        comment VARCHAR(255)\
+      )'
 
 const createDB = () => {
     return new Promise((resolve, reject) => {
@@ -56,13 +62,13 @@ const createTBLs = () => {
                 if (error) {
                     return reject(error);
                 }
-                console.info('Tables created');
+                console.info('users table created');
                 return resolve(result[0]);
             });
     });
 }
 
-const createTBL = () => {
+const videosTable = () => {
     return new Promise((resolve, reject) => {
         con.query(
             `${video};`,
@@ -70,7 +76,20 @@ const createTBL = () => {
                 if (error) {
                     return reject(error);
                 }
-                console.info('Tables created');
+                console.info('videos table created');
+                return resolve(result[0]);
+            });
+    });
+}
+const commentTable = () => {
+    return new Promise((resolve, reject) => {
+        con.query(
+            `${comments};`,
+            (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                console.info('comments table created');
                 return resolve(result[0]);
             });
     });
@@ -80,7 +99,8 @@ const setupDb = async () => {
     try {
         await createDB();
         await createTBLs();
-        await createTBL();
+        await videosTable();
+        await commentTable();
     } catch (error) {
         console.error(error.message);
     }
