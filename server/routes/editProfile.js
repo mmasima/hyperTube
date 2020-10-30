@@ -21,31 +21,33 @@ router.post('/', auth, async function (req, res) {
     var password = req.body.password;
     var confirm = req.body.confirm;
     id = req.id;
-
-
     if (username === '' && firstname === '' && lastname === '' && password === '' && confirm === '') {
         res.send(401);
         res.send();
+        res.end();
     }
     else {
-        if (username != '') {
+        if (username != undefined) {
             var check = await db.checkUserNameExists(username);
             if (check.length == 0) {
                 await db.edituserName(username, id);
             }
         }
-        if (firstname != '') {
+        if (firstname != undefined ) {
             await db.EditFirstName(firstname, id);
+            
         }
-        if (lastname != '') {
-            await db.EditFirstName(firstname, id);
+        if (lastname != undefined) {
+            await db.EditLastName(lastname, id);
         }
-        if (password != '' && password === confirm) {
+        if (password != undefined && password === confirm) {
             let newPassword = await bcrypt.hash(password, saltRound);
             await db.EditPassword(newPassword, id)
         }
         res.status(200).send();
+        res.end();
     }
+
 
 });
 
