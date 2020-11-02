@@ -24,6 +24,7 @@ class Main extends Component {
       videoname: "",
       videoplay: "",
       setVideo: "",
+      comments: [],
       isOpen: false
 
     }
@@ -90,7 +91,17 @@ class Main extends Component {
       })
   }
   viewMovieInfo = (id) => {
-    mainApi.getComments(id.movieId);
+    mainApi.getComments(id.movieId)
+    .then((res) => {
+      if(res.status === 401){
+          console.log('an error occured')
+      }
+      else if(res.status === 200){
+        console.log(res.data[0].comment)
+       this.comments = res.data;
+        console.log(this.comments);
+      }
+    })
     let filteredMovie;
     this.state.movies.forEach((movie, i) => {
       if (movie.id === id.movieId) {
@@ -213,7 +224,11 @@ class Main extends Component {
                   </div>
                 </div>
                 <div className="row">
-
+                  <div className="col">
+                    <div>
+                    {this.state.comments}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

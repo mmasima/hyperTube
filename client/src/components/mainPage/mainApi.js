@@ -25,10 +25,7 @@ const getComments = async (id) => {
             'x-auth-token': `${token().token}`
         }
     }
-    axios.post('http://localhost:5000/comments/getComments', {id}, data)
-    .then((res) => {
-        console.log(res);
-    })
+    return axios.post('http://localhost:5000/comments/getComments', {id}, data)
 }
 
 export default {
