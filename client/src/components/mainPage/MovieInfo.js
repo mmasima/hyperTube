@@ -12,10 +12,10 @@ const MovieInfo = (props) => {
                 <div className="card  text-white bg-secondary mb-3">
                     <div className="row no-gutters">
                         <div className="col-md-4">
-                            {props.currentMovie.background_image_original == null ? <img className="card-img" src={`https://s3-ap-southeast-1.amazonaws.com/upcode/static/default-image.jpg`} alt="Card image cap" style={{
-                                width: "100%",
+                            {props.currentMovie.medium_cover_image === null ? <img className="card-img" src={`https://s3-ap-southeast-1.amazonaws.com/upcode/static/default-image.jpg`} alt="Card image cap" style={{
+                                width: "100px",
                                 height: 360
-                            }} /> : <img className="" src={props.currentMovie.background_image_original} alt="Card image" style={{
+                            }} /> : <img className="" src={props.currentMovie.medium_cover_image} alt="Card image" style={{
                                 width: "100%",
                                 height: 360
                             }} />}

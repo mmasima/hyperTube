@@ -66,7 +66,7 @@ const Login = (props) => {
                         </h3>
                                 <form onSubmit={submit}>
                                     <div className="form-group">
-                                        <labelX>username</labelX>
+                                        <label>username</label>
                                         <input type="text" className="form-control" id="username" onChange={handleChange} value={state.username}
                                             name="username" placeholder="Enter username" required />
                                     </div>

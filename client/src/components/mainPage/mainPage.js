@@ -68,7 +68,7 @@ class Main extends Component {
 
   submitComment = (e) => {
     e.preventDefault()
-    mainApi.submitComment(this.state.currentMovie.id,  this.state.comment)
+    mainApi.submitComment(this.state.currentMovie.id, this.state.comment)
       .then((res) => {
         if (res.status === 401) {
           console.log("failed to comment")
@@ -90,14 +90,15 @@ class Main extends Component {
       })
   }
   viewMovieInfo = (id) => {
+    mainApi.getComments(id.movieId);
     let filteredMovie;
     this.state.movies.forEach((movie, i) => {
       if (movie.id === id.movieId) {
         filteredMovie = movie
       }
     })
-
     this.setState({ currentMovie: filteredMovie })
+
   }
   logout = (props) => {
     Cookies.remove("user");
@@ -122,10 +123,9 @@ class Main extends Component {
   }
 
   MoviePlayable = () => {
-    if(this.videoplay){
-      console.log("hello world")
+    if (this.videoplay) {
       console.log(this.videoplay);
-      this.setState({ isOpen: true});
+      this.setState({ isOpen: true });
     }
   }
 
@@ -134,11 +134,11 @@ class Main extends Component {
     fetch(`https://yts.mx/api/v2/list_movies.json=?minimum_rating=7`)
       .then(data => data.json())
       .then(data => {
-
+        console.log(data);
         this.setState({ movies: [...data.data.movies], totalResults: data.data.movie_count })
       })
   }
-  
+
 
   render() {
     const numberPages = Math.floor(this.state.totalResults / 20);
@@ -147,7 +147,7 @@ class Main extends Component {
         <nav className="navbar navbar-dark bg-dark">
           <h5 className="navbar-brand">HyperTube</h5>
           <div className="mr-sm-2">
-          <button className="btn btn-secondary mr-2" onClick={this.latestMovies}>
+            <button className="btn btn-secondary mr-2" onClick={this.latestMovies}>
               latest Movies
           </button>
             <button className="btn btn-secondary mr-2" onClick={this.loggedIn}>
@@ -158,7 +158,7 @@ class Main extends Component {
           </button>
           </div>
         </nav>
-        { this.state.currentMovie == null ?
+        {this.state.currentMovie == null ?
           <div>
             <SearchArea handleSubmit={this.handleSubmit} handleChange={this.handleChange} />
             <MovieList viewMovieInfo={this.viewMovieInfo} movies={this.state.movies} />
@@ -173,12 +173,12 @@ class Main extends Component {
               <div className="card  text-white bg-secondary mb-3">
                 <div className="row no-gutters">
                   <div className="col-md-4">
-                    {this.state.currentMovie.background_image_original == null ? <img className="card-img" src={`https://s3-ap-southeast-1.amazonaws.com/upcode/static/default-image.jpg`} alt="" style={{
+                    {this.state.currentMovie.medium_cover_image === null ? <img className="card-img" src={`https://s3-ap-southeast-1.amazonaws.com/upcode/static/default-image.jpg`} alt="" style={{
                       width: "100%",
-                      height: 360
-                    }} /> : <img className="" src={this.state.currentMovie.background_image_original} alt="" style={{
+                      height: 350
+                    }} /> : <img className="" src={this.state.currentMovie.medium_cover_image} alt="" style={{
                       width: "100%",
-                      height: 360
+                      height: 450
                     }} />}
                   </div>
                   <div className="col-md-8">
@@ -198,15 +198,22 @@ class Main extends Component {
                           <button className="btn btn-primary" onClick={this.download}>download Movie</button>
                         </div>
                         <div className="col">
-                          <button className="btn btn-primary">comment</button>
-                        </div>
-                        <div className="col">
                           <input type='text' name="comment" value={this.comment} onChange={this.changeComment} />
                           <button type='submit' className="btn btn-primary ml-3" onClick={this.submitComment}>comment</button>
                         </div>
                       </div>
                     </div>
                   </div>
+                </div>
+                <div className="row">
+                  <div className="col">
+                    <h4>
+                      comments
+                    </h4>
+                  </div>
+                </div>
+                <div className="row">
+
                 </div>
               </div>
             </div>

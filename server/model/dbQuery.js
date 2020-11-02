@@ -276,9 +276,10 @@ hypertube.comments = function(videoId, comments){
     })
 }
 
-hypertube.getComments = function(){
+hypertube.getComments = function(id){
     return new Promise((resolve, reject) =>{
-		con.query('SELECT * FROM commment',
+        con.query('SELECT * FROM comment WHERE video_id=?',
+        [id],
         (error, result) => {
             if(error) return reject(error);
             return resolve(result); 
