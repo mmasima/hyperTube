@@ -14,6 +14,17 @@ function Registration() {
     password: "",
     confirm: ""
   })
+
+  const passwordy = (value) => {
+    if (value.length < 6 || value.length >20 || value === value.match(/[0-9]/)) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          The password must be between 6 and 20 characters.
+        </div>
+      );
+    }
+};
+
   const history = useHistory();
   const submit = e => {
     e.preventDefault()
@@ -92,7 +103,7 @@ function Registration() {
 
                     <div className="col-sm-10 col-lg-6">
                       <label for="Password">Password</label>
-                      <input value={state.password} type="password" className="form-control" id="password" placeholder="enter Password"
+                      <input value={state.password} type="password" className="form-control" id="password" placeholder="enter Password" validations={[passwordy]}
                         name="password" onChange={handleChange} title="Must have digits, caps and small letters"
                         require />
                     </div>
