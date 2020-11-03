@@ -54,8 +54,6 @@ class Main extends Component {
     fetch(`https://yts.mx/api/v2/list_movies.json=?query_term=${this.state.searchTerm}`)
       .then(data => data.json())
       .then(data => {
-        console.log("hello wolrd")
-        console.log(data)
         this.setState({ movies: [...data.data.movies], totalResults: data.data.movie_count })
       })
   }
@@ -98,7 +96,6 @@ class Main extends Component {
           console.log('an error occured')
         }
         else if (res.status === 200) {
-          console.log(res.data)
           this.setState({ comments: [...res.data] })
           console.log(this.state.comments);
 
@@ -147,7 +144,7 @@ class Main extends Component {
     fetch(`https://yts.mx/api/v2/list_movies.json=?minimum_rating=7`)
       .then(data => data.json())
       .then(data => {
-        console.log(data);
+
         this.setState({ movies: [...data.data.movies], totalResults: data.data.movie_count })
       })
   }
@@ -228,14 +225,18 @@ class Main extends Component {
                 <div className="row">
                   <div className="col">
                     <div>
-                      {
+                      {this.state.comments.length === 0
+                      ?
+                      <div>
+                        no comments
+                      </div>
+                      :
                       this.state.comments.map((comments, x) => {
                         return(
                           <div className="container" key={x}>
                           <div className="row">
                             <div className="col">
                               {comments.comment}
-                              {comments.id}
                             </div>
                           </div>
                           </div>

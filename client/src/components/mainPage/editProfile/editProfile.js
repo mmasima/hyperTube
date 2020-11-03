@@ -97,8 +97,8 @@ function EditProfile(props) {
                 </div>
             </nav>
             {   state.isLoaded === false ?
-                <div class="spinner-grow" role="status">
-                <span class="sr-only">Loading...</span>
+                <div className="spinner-grow" role="status">
+                <span className="sr-only">Loading...</span>
               </div>
             :
             <div className="container mt-5">
