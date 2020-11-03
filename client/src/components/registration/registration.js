@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import registerApi from './registerApi';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
-
-
+toast.configure()
 function Registration() {
   const [state, setState] = useState({
     username: "",
@@ -97,6 +98,7 @@ function Registration() {
                       <label for="UserEmail">email</label>
                       <input value={state.email} onChange={handleChange} type="email" className="form-control" id="email" placeholder="enter email" name="email"
                         required />
+                        <h2 {...toast('Adebayor !')}/>
                     </div>
                   </div>
                   <div className="form-group row">
@@ -112,6 +114,7 @@ function Registration() {
                       <input value={state.confirm} type="password" className="form-control" id="password" placeholder="enter Password"
                         name="confirm" onChange={handleChange} title="Must have digits, caps and small letters"
                         require />
+                        
                     </div>
                   </div>
 
