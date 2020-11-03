@@ -54,7 +54,8 @@ class Main extends Component {
     fetch(`https://yts.mx/api/v2/list_movies.json=?query_term=${this.state.searchTerm}`)
       .then(data => data.json())
       .then(data => {
-
+        console.log("hello wolrd")
+        console.log(data)
         this.setState({ movies: [...data.data.movies], totalResults: data.data.movie_count })
       })
   }
@@ -92,23 +93,24 @@ class Main extends Component {
   }
   viewMovieInfo = (id) => {
     mainApi.getComments(id.movieId)
-    .then((res) => {
-      if(res.status === 401){
+      .then((res) => {
+        if (res.status === 401) {
           console.log('an error occured')
-      }
-      else if(res.status === 200){
-        console.log(res.data[0].comment)
-       this.comments = res.data;
-        console.log(this.comments);
-      }
-    })
-    let filteredMovie;
-    this.state.movies.forEach((movie, i) => {
-      if (movie.id === id.movieId) {
-        filteredMovie = movie
-      }
-    })
-    this.setState({ currentMovie: filteredMovie })
+        }
+        else if (res.status === 200) {
+          console.log(res.data)
+          this.setState({ comments: [...res.data] })
+          console.log(this.state.comments);
+
+          let filteredMovie;
+          this.state.movies.forEach((movie, i) => {
+            if (movie.id === id.movieId) {
+              filteredMovie = movie
+            }
+          })
+          this.setState({ currentMovie: filteredMovie })
+        }
+      })
 
   }
   logout = (props) => {
@@ -226,7 +228,20 @@ class Main extends Component {
                 <div className="row">
                   <div className="col">
                     <div>
-                    {this.state.comments}
+                      {
+                      this.state.comments.map((comments, x) => {
+                        return(
+                          <div className="container" key={x}>
+                          <div className="row">
+                            <div className="col">
+                              {comments.comment}
+                              {comments.id}
+                            </div>
+                          </div>
+                          </div>
+                        )
+                      })
+                      }    
                     </div>
                   </div>
                 </div>
