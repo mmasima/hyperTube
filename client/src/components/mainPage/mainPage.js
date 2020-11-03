@@ -25,8 +25,8 @@ class Main extends Component {
       videoplay: "",
       setVideo: "",
       comments: [],
-      isOpen: false
-
+      isOpen: false,
+      isLoaded: true
     }
   }
 
@@ -51,10 +51,11 @@ class Main extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    this.setState({ isLoaded: false })
     fetch(`https://yts.mx/api/v2/list_movies.json=?query_term=${this.state.searchTerm}`)
       .then(data => data.json())
       .then(data => {
-        this.setState({ movies: [...data.data.movies], totalResults: data.data.movie_count })
+        this.setState({ movies: [...data.data.movies], totalResults: data.data.movie_count, isLoaded: true })
       })
   }
 
@@ -113,6 +114,7 @@ class Main extends Component {
   logout = (props) => {
     Cookies.remove("user");
     localStorage.removeItem('login');
+    localStorage.removeItem('userDetails');
     auth.logout(() => {
       this.props.history.push("/");
     });
@@ -122,9 +124,9 @@ class Main extends Component {
       localStorage.setItem('userDetails', JSON.stringify({
         user: res.data[0]
       }))
-    })
-    auth.login(() => {
-      this.props.history.push('editProfile');
+      auth.login(() => {
+        this.props.history.push('editProfile');
+      })
     })
   }
 
@@ -226,23 +228,23 @@ class Main extends Component {
                   <div className="col">
                     <div>
                       {this.state.comments.length === 0
-                      ?
-                      <div>
-                        no comments
+                        ?
+                        <div>
+                          no comments
                       </div>
-                      :
-                      this.state.comments.map((comments, x) => {
-                        return(
-                          <div className="container" key={x}>
-                          <div className="row">
-                            <div className="col">
-                              {comments.comment}
+                        :
+                        this.state.comments.map((comments, x) => {
+                          return (
+                            <div className="container" key={x}>
+                              <div className="row">
+                                <div className="col">
+                                  {comments.comment}
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                          </div>
-                        )
-                      })
-                      }    
+                          )
+                        })
+                      }
                     </div>
                   </div>
                 </div>

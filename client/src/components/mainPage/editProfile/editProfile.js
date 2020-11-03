@@ -12,17 +12,9 @@ function EditProfile(props) {
         password: "",
         selectedFile: null,
         confirm: "",
-        isLoaded: false
+        isLoaded: true
     })
-    useEffect(() => {
-        const test = JSON.parse(localStorage.getItem("userDetails"));
-        if (test === undefined) {
-            setState({ isLoaded: false });
-        }
-        else {
-            setState({ isLoaded: true });
-        }
-    }, []);
+    
     const user = JSON.parse(localStorage.getItem("userDetails"));
 
     const history = useHistory();
@@ -72,6 +64,7 @@ function EditProfile(props) {
 
     const logout = () => {
         localStorage.removeItem('login');
+        localStorage.removeItem('userDetails');
         auth.logout(() => {
             props.history.push("/");
         });
