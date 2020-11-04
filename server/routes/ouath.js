@@ -33,7 +33,6 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
   function (req, res) {
     // Successful authentication, redirect home.
     var token = jwt.sign({ id: req.user.displayName }, config.get('jwtSecret'), { expiresIn: 3600 });
-
     router.use(cookieParser());
     router.use(cookieSession({
       name:'hypertube',

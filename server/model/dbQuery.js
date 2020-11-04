@@ -2,6 +2,8 @@ var con = require('./connection');
 
 let hypertube = {};
 
+
+// register
 hypertube.insertUserInfo = function (username, name, lastname, email, password, token) {
     return new Promise((resolve, reject) => {
         con.query('INSERT INTO users (username, name,lastname,email,password,token,verify) VALUES(?,?,?,?,?,?,?)',
@@ -15,6 +17,23 @@ hypertube.insertUserInfo = function (username, name, lastname, email, password, 
             })
     })
 }
+
+// register via google
+
+hypertube.googleRegiser = function (username, name, lastname) {
+    return new Promise((resolve, reject) => {
+        con.query('INSERT INTO users (username, name,lastname,verify) VALUES(?,?,?,?)',
+            [username, name, lastname, 'yes'],
+            (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                console.log(result);
+                return resolve(result);
+            })
+    })
+}
+
 
 hypertube.findUserByToken = function (token) {
     return new Promise((resolve, reject) => {
@@ -116,18 +135,18 @@ hypertube.checkEmailAndUserNameExist = function (username, email) {
 
 //-------------edit Profile start-------//
 
-hypertube.uploadImage = async function(image, id){
-	return new Promise((resolve, reject) => {
-		con.query(`UPDATE users SET image=? WHERE id=?`,
-			[image, id],
-			(error, result) => {
-				if (error) {
-					return reject(error);
-				}
-				console.log(result);
-				return resolve(result);
-			})
-	})
+hypertube.uploadImage = async function (image, id) {
+    return new Promise((resolve, reject) => {
+        con.query(`UPDATE users SET image=? WHERE id=?`,
+            [image, id],
+            (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                console.log(result);
+                return resolve(result);
+            })
+    })
 
 
 }
@@ -174,7 +193,7 @@ hypertube.EditLastName = function (lastName, Id) {
         )
     })
 }
-hypertube.EditPassword= function (password, Id) {
+hypertube.EditPassword = function (password, Id) {
     return new Promise((resolve, reject) => {
         con.query(`UPDATE users SET password=? WHERE id=?`,
             [password, Id],
@@ -189,7 +208,7 @@ hypertube.EditPassword= function (password, Id) {
     })
 }
 
-hypertube.Getuser = function (id){
+hypertube.Getuser = function (id) {
     return new Promise((resolve, reject) => {
         con.query(`SELECT * FROM users WHERE id=? `,
             [id],
@@ -204,86 +223,86 @@ hypertube.Getuser = function (id){
     })
 }
 
-hypertube.insertVideoD = function(video_id,title, name, ext, videosize, hash, status){
-    return new Promise((resolve, reject) =>{
+hypertube.insertVideoD = function (video_id, title, name, ext, videosize, hash, status) {
+    return new Promise((resolve, reject) => {
         con.query(`INSERT INTO video (video_id, title, name, ext, videosize, hash, status)
         VALUES(?,?,?,?,?,?,?)`,
-        [video_id,title, name, ext, videosize, hash, status],
-        (error, result) =>{ 
-            if(error) return reject(error);
-            return resolve(result); 
-        })
+            [video_id, title, name, ext, videosize, hash, status],
+            (error, result) => {
+                if (error) return reject(error);
+                return resolve(result);
+            })
     })
 }
 
-hypertube.checkvideoExists = function(video_id){
+hypertube.checkvideoExists = function (video_id) {
     return new Promise((resolve, reject) => {
-		con.query('SELECT * FROM video WHERE video_id=? ',
+        con.query('SELECT * FROM video WHERE video_id=? ',
             [video_id],
-			(error, result) => {
-				if (error) {
-					return reject(error);
-				}
-				//console.log(result)
-				return resolve(result);
-			})
-	})
+            (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                //console.log(result)
+                return resolve(result);
+            })
+    })
 }
 
-hypertube.Updatevideo =async function(status, video_id ){
-	return new Promise((resolve, reject) => {
-		con.query(`UPDATE video SET status=? WHERE video_id=?`,
-			[status,video_id],
-			(error, result) => {
-				if (error) {
-					return reject(error);
-				}
-				console.log(result);
-				return resolve(result);
-			})
-	})
+hypertube.Updatevideo = async function (status, video_id) {
+    return new Promise((resolve, reject) => {
+        con.query(`UPDATE video SET status=? WHERE video_id=?`,
+            [status, video_id],
+            (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                console.log(result);
+                return resolve(result);
+            })
+    })
 
 
 }
 
-hypertube.checkvideoname = async function(video_id){
+hypertube.checkvideoname = async function (video_id) {
     return new Promise((resolve, reject) => {
-		con.query('SELECT name FROM video WHERE video_id=? ',
+        con.query('SELECT name FROM video WHERE video_id=? ',
             [video_id],
-			(error, result) => {
-				if (error) {
-					return reject(error);
-				}
-				console.log(result)
-				return resolve(result);
-			})
-	})
+            (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                console.log(result)
+                return resolve(result);
+            })
+    })
 }
 //-------------edit Profile end-------//
 
 
 //-------------comments start-------//
 
-hypertube.comments = function(videoId, comments){
-    return new Promise((resolve, reject) =>{
+hypertube.comments = function (videoId, comments) {
+    return new Promise((resolve, reject) => {
         con.query(`INSERT INTO comment(video_id, comment)
         VALUES(?,?)`,
-        [videoId,comments],
-        (error, result) => {
-            if(error) return reject(error);
-            return resolve(result); 
-        })
+            [videoId, comments],
+            (error, result) => {
+                if (error) return reject(error);
+                return resolve(result);
+            })
     })
 }
 
-hypertube.getComments = function(id){
-    return new Promise((resolve, reject) =>{
+hypertube.getComments = function (id) {
+    return new Promise((resolve, reject) => {
         con.query('SELECT * FROM comment WHERE video_id=?',
-        [id],
-        (error, result) => {
-            if(error) return reject(error);
-            return resolve(result); 
-        })
+            [id],
+            (error, result) => {
+                if (error) return reject(error);
+                return resolve(result);
+            })
     })
 }
 

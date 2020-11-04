@@ -42,9 +42,6 @@ const Login = (props) => {
         });
     }
 
-    const loggedIn = () => {
-        Cookies.set("user", "True");
-    }
     return (
 
         <div>
@@ -77,7 +74,7 @@ const Login = (props) => {
                                     </div>
                                     <div className="mt-5 mb-2">
 
-                                        <button className="btn btn-primary" onClick={loggedIn}>
+                                        <button className="btn btn-primary">
                                             <a href="http://localhost:5000/google">
                                                 google login
                                             </a>

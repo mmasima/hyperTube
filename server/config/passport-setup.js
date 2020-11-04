@@ -1,6 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-
+var db = require('../model/dbQuery');
 
 passport.serializeUser(function(user, done) {
     /*
@@ -25,12 +25,24 @@ passport.use(new GoogleStrategy({
     clientSecret: "ipJ1ckmw1VQ9-M_Nnhf2pd8C",
     callbackURL: "http://localhost:5000/google/callback"
   },
-  function(accessToken, refreshToken, profile, done) {
-    /*
-     use the profile info (mainly profile id) to check if the user is registerd in ur db
-     If yes select the user and pass him to the done callback
-     If not create the user and then select him and pass to callback
-    */
-    return done(null, profile);
+  async function(accessToken, refreshToken, profile, done) {
+    try{
+      console.log('google signin');
+      var check = await db.checkUserNameExists(profile.name.givenName);
+      if(check.length === 0){
+        console.log("registering user to db")
+        db.googleRegiser(profile.name.givenName, profile.name.familyName, profile.familyName, profile.id)
+        return done(null, profile);
+      }
+      else {
+        console.log("user already registered with google")
+        return done(null, profile);
+      }
+    }
+    catch(error){
+      console.log("error in google signin");
+      console.log(error);
+    }
+    
   }
 ));

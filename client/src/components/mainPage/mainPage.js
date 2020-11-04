@@ -26,6 +26,7 @@ class Main extends Component {
       setVideo: "",
       comments: [],
       isOpen: false,
+      cookie: Cookies.get('hypertube'),
       isLoaded: true
     }
   }
@@ -43,8 +44,6 @@ class Main extends Component {
         console.log('moviename', this.videoname);
         // console.log('videonnn', nameonly.substring(0, nameonly.length - 4) + '.mp4');
       }
-
-
     })
       .catch(error => console.log(error))
   }
@@ -60,6 +59,8 @@ class Main extends Component {
   }
 
   handleChange = (e) => {
+    
+    console.log(this.state.cookie)
     this.setState({ searchTerm: e.target.value });
   }
 
@@ -112,7 +113,6 @@ class Main extends Component {
 
   }
   logout = (props) => {
-    Cookies.remove("user");
     localStorage.removeItem('login');
     localStorage.removeItem('userDetails');
     auth.logout(() => {
