@@ -5,6 +5,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
+const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+const validateForm = (errors) => {
+  let valid = true;
+  Object.values(errors).forEach(
+    (val) => val.length > 0 && (valid = false)
+  );
+  return valid;
+}
+
 toast.configure()
 function Registration() {
   const [state, setState] = useState({
@@ -13,17 +22,18 @@ function Registration() {
     lastname: "",
     email: "",
     password: "",
-    confirm: ""
+    confirm: "",
+    errors: {
+      fullName: '',
+      email: '',
+      password: '',
+    }
   })
 
   const passwordy = (value) => {
-    if (value.length < 6 || value.length >20 || value === value.match(/[0-9]/)) {
-      return (
-        <div className="alert alert-danger" role="alert">
-          The password must be between 6 and 20 characters.
-        </div>
-      );
-    }
+    if (value.length < 6 || value.length >20) {
+    console.log(value.length)
+    console.log(value)}
 };
 
   const history = useHistory();
@@ -42,13 +52,39 @@ function Registration() {
       .catch(error => console.log(error))
 
   }
-  const handleChange = (e) => {
-    e.persist();
-    debugger
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    let errors = state.errors;
+
+    switch (name) {
+      case 'email': 
+        errors.email = 
+          validEmailRegex.test(value)
+            ? ''
+            : 'Email is not valid!';
+        break;
+      case 'password': 
+        errors.password = 
+          value.length < 8
+            ? 'Password must be 8 characters long!'
+            : '';
+        break;
+      default:
+        break;
+    }
+
+    setState({errors, [name]: value});
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if(validateForm(state.errors)) {
+      console.info('Valid Form')
+    }else{
+      console.error('Invalid Form')
+    }
   }
 
   return (
@@ -90,7 +126,10 @@ function Registration() {
                     <div className="col-sm-10">
                       <label for="UserLastName">lastname</label>
                       <input value={state.lastname} onChange={handleChange} type="text" className="form-control" id="lastname" placeholder="enter last name" name="lastname"
-                        required />
+                        required noValidate />
+                      
+              {state.errors.email.length > 0 && 
+                <span className='error'>{state.errors.email}</span>}
                     </div>
                   </div>
                   <div className="form-group row">
@@ -98,22 +137,22 @@ function Registration() {
                       <label for="UserEmail">email</label>
                       <input value={state.email} onChange={handleChange} type="email" className="form-control" id="email" placeholder="enter email" name="email"
                         required />
-                        <h2 {...toast('Adebayor !')}/>
                     </div>
                   </div>
                   <div className="form-group row">
 
                     <div className="col-sm-10 col-lg-6">
                       <label for="Password">Password</label>
-                      <input value={state.password} type="password" className="form-control" id="password" placeholder="enter Password" validations={[passwordy]}
-                        name="password" onChange={handleChange} title="Must have digits, caps and small letters"
-                        require />
+                      <input value={state.password} type="password" className="form-control" id="password" placeholder="enter Password" validations={passwordy.value}
+                        name="password" onChange={handleChange} title="Must have digits, caps and small letters" require="true" />
                     </div>
                     <div className="col-sm-10 col-lg-6">
                       <label for="Password">confirm password</label>
-                      <input value={state.confirm} type="password" className="form-control" id="password" placeholder="enter Password"
+                      <input value={state.confirm} type="password" className="form-control" id="passwordconfirm" placeholder="enter Password"
                         name="confirm" onChange={handleChange} title="Must have digits, caps and small letters"
-                        require />
+                        require="true" noValidate />
+                        {state.errors.password.length > 0 && 
+                          <span className='error'>{state.errors.password}</span>}
                         
                     </div>
                   </div>
