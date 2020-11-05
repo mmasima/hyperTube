@@ -1,5 +1,8 @@
 import React from 'react';
 import './Movie.css';
+import { toast } from 'react-toastify';
+
+toast.info('To watch a movie press download movie button till you get a download Finished Notification, Then press it again till you get a notification saying your Movie is Ready !')
 
 const Movie = (props) => {
     return (

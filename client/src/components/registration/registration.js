@@ -28,7 +28,7 @@ function Registration() {
   const submit = e => {
     e.preventDefault()
     if (state.password.length < 8)
-      toast('Listen to the errors Buddy !')
+      toast.error('Listen to the errors Buddy !')
     else
       registerApi(state.username, state.firstname, state.lastname, state.email, state.password, state.confirm)
         .then(res => {

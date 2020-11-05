@@ -8,6 +8,7 @@ import Cookies from 'js-cookie';
 import profileApis from './editProfile/ProfileApis'
 import ModalVideo from 'react-modal-video';
 import mainApi from './mainApi';
+import { toast } from 'react-toastify';
 
 
 class Main extends Component {
@@ -34,14 +35,16 @@ class Main extends Component {
   download = async () => {
 
     await axios.get(`http://localhost:5000/torrent?url=${this.state.currentMovie.torrents[0].url}&id=${this.state.currentMovie.id}&title=${this.state.currentMovie.title}`, {
-
+    
     }).then(res => {
       console.log('res.data', res.data);
+      toast.warn('Your Movie is Downloading !')
       if (res.data.message) {
         this.videoplay = `http://localhost:5000/torrent/video?movie=${res.data.message}`
         let nameonly = res.data.message
         this.videoname = (nameonly.substring(0, nameonly.length - 4) + '.mp4')
         console.log('moviename', this.videoname);
+        toast.success('Your Movie is Ready, Press Play !')
         // console.log('videonnn', nameonly.substring(0, nameonly.length - 4) + '.mp4');
       }
     })
