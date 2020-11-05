@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { render } from 'react-dom';
 import registerApi from './registerApi';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
-const validateForm = (errors) => {
-  let valid = true;
-  Object.values(errors).forEach(
-    (val) => val.length > 0 && (valid = false)
-  );
-  return valid;
-}
 
 toast.configure()
 function Registration() {
@@ -30,15 +24,12 @@ function Registration() {
     }
   })
 
-  const passwordy = (value) => {
-    if (value.length < 6 || value.length >20) {
-    console.log(value.length)
-    console.log(value)}
-};
-
   const history = useHistory();
   const submit = e => {
     e.preventDefault()
+    if(state.password.length < 8)
+    toast('Listen to the errors Buddy !')
+    else
     registerApi(state.username, state.firstname, state.lastname, state.email, state.password, state.confirm)
       .then(res => {
         console.log(`req successful ${res.status}`);
@@ -52,13 +43,28 @@ function Registration() {
       .catch(error => console.log(error))
 
   }
+  const handleChange = (e) => {
+    e.persist();
+    debugger
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  }
+  
 
-  const handleChange = (event) => {
-    event.preventDefault();
-    const { name, value } = event.target;
+  const handleChangey = (e) => {
+    e.persist();
+    const { name, value } = e.target;
     let errors = state.errors;
 
     switch (name) {
+      case 'fullName': 
+        errors.fullName = 
+          value.length < 5
+            ? 'Full Name must be 5 characters long!'
+            : '';
+        break;
       case 'email': 
         errors.email = 
           validEmailRegex.test(value)
@@ -75,16 +81,10 @@ function Registration() {
         break;
     }
 
-    setState({errors, [name]: value});
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if(validateForm(state.errors)) {
-      console.info('Valid Form')
-    }else{
-      console.error('Invalid Form')
-    }
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
   }
 
   return (
@@ -119,41 +119,43 @@ function Registration() {
                   <div className="form-group row">
                     <div className="col-sm-10 col-lg-10">
                       <label for="userName">Name</label>
-                      <input value={state.firstname} onChange={handleChange} type="text" className="form-control" id="Name" name="firstname" placeholder="enter name" required />
+                      <input value={state.firstname} onChange={handleChangey} type="text" className="form-control" id="Name" name="firstname" placeholder="enter name" required noValidate/>
+                      {state.errors.fullName.length > 0 && 
+                          <span className='error'>{state.errors.fullName}</span>}
                     </div>
                   </div>
                   <div className="form-group row">
                     <div className="col-sm-10">
                       <label for="UserLastName">lastname</label>
-                      <input value={state.lastname} onChange={handleChange} type="text" className="form-control" id="lastname" placeholder="enter last name" name="lastname"
+                      <input value={state.lastname} onChange={handleChangey} type="text" className="form-control" id="lastname" placeholder="enter last name" name="lastname"
                         required noValidate />
-                      
-              {state.errors.email.length > 0 && 
-                <span className='error'>{state.errors.email}</span>}
+                        {state.errors.fullName.length > 0 && 
+                          <span className='error'>{state.errors.fullName}</span>}
                     </div>
                   </div>
                   <div className="form-group row">
                     <div className="col-sm-10">
                       <label for="UserEmail">email</label>
-                      <input value={state.email} onChange={handleChange} type="email" className="form-control" id="email" placeholder="enter email" name="email"
+                      <input value={state.email} onChange={handleChangey} type="email" className="form-control" id="email" placeholder="enter email" name="email"
                         required />
+                        {state.errors.email.length > 0 && 
+                        <span className='error'>{state.errors.email}</span>}
                     </div>
                   </div>
                   <div className="form-group row">
 
                     <div className="col-sm-10 col-lg-6">
                       <label for="Password">Password</label>
-                      <input value={state.password} type="password" className="form-control" id="password" placeholder="enter Password" validations={passwordy.value}
-                        name="password" onChange={handleChange} title="Must have digits, caps and small letters" require="true" />
+                      <input value={state.password} type="password" className="form-control" id="password" placeholder="enter Password"
+                        name="password" onChange={handleChangey} title="Must have digits, caps and small letters" require="true" />
+                        {state.errors.password.length > 0 && 
+                          <span className='error'>{state.errors.password}</span>}
                     </div>
                     <div className="col-sm-10 col-lg-6">
                       <label for="Password">confirm password</label>
                       <input value={state.confirm} type="password" className="form-control" id="passwordconfirm" placeholder="enter Password"
                         name="confirm" onChange={handleChange} title="Must have digits, caps and small letters"
-                        require="true" noValidate />
-                        {state.errors.password.length > 0 && 
-                          <span className='error'>{state.errors.password}</span>}
-                        
+                        require="true" />
                     </div>
                   </div>
 
