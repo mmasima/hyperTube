@@ -32,13 +32,13 @@ function Registration() {
     else
       registerApi(state.username, state.firstname, state.lastname, state.email, state.password, state.confirm)
         .then(res => {
-          console.log(`req successful ${res.status}`);
-          if (res.status === 401)
+          console.log(res);
+          if (res.status === 401){
             history.push('/register')
+          }
           else if (res.status === 200) {
             history.push('/')
           }
-
         })
         .catch(error => console.log(error))
 

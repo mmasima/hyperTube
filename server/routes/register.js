@@ -30,9 +30,11 @@ router.post('/', async function (req, res) {
             check.forEach(element => {
                 if (email == element.email) {
                     emailExists = true;
+                    console.log("email exists");
                 }
                 if (username == element.username) {
                     usernameExists = true;
+                    console.log("username exists");
                 }
             });
             if (usernameExists == false && emailExists == false) {
@@ -76,6 +78,10 @@ router.post('/', async function (req, res) {
                     res.end()
 
                 }
+            }
+            else{
+                res.redirect('/')
+                res.end();
             }
 
         } catch (error) {

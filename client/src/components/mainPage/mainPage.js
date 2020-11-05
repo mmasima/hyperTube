@@ -57,7 +57,9 @@ class Main extends Component {
         if(data.data.movies)
           this.setState({ movies: [...data.data.movies], totalResults: data.data.movie_count, isLoaded: true })
         else{
-          window.location.reload(false);
+          auth.login((props) => {
+            this.props.history.push('mainPage');
+          })
         }
       })
   }
@@ -76,11 +78,15 @@ class Main extends Component {
       .then((res) => {
         if (res.status === 401) {
           console.log("failed to comment")
-          window.location.reload(false);
+          auth.login((props) => {
+            this.props.history.push('mainPage');
+          })
         }
         else if (res.status === 200) {
           console.log("comment added successfully!")
-          window.location.reload(false);
+          auth.login((props) => {
+            this.props.history.push('mainPage');
+          })
         }
       })
   }

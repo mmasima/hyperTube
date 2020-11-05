@@ -19,8 +19,9 @@ router.post('/', async function (req, res) {
 
         if (!username || !password) {
             console.log("error in nothing inserted")
-            res.status(401)
-            history.push('/')
+            res.status(401).send({
+                message: "nothing was inserted!",
+            });
             res.end();
         } else {
             usernameExists = false;
@@ -28,7 +29,6 @@ router.post('/', async function (req, res) {
             if (check.length === 0) {
                 console.log("error in no users")
                 res.status(401)
-                history.push('/')
                 res.end();
             }
             else {
@@ -51,8 +51,7 @@ router.post('/', async function (req, res) {
 
                         } else {
                             console.log("error in password incorrect")
-                            res.status(401)
-                            history.push('/')
+                            res.status(401);
                             res.end();
                         }
                     }
@@ -61,8 +60,10 @@ router.post('/', async function (req, res) {
         }
     } catch (error) {
         console.log("error in catch")
-        res.status(401)
-        history.push('/')
+        res.status(401).send({
+            message: "oops, something went wrong",
+
+        });
     }
 });
 
