@@ -20,8 +20,8 @@ class App extends Component {
           <Route component={Registration} exact path="/Register" />
           <Route component={ForgotPass} exact path="/forgotPass" />
           <Route component={ResetPass} exact path="/resetPass" />
-          <Route component={Main} exact path="/mainPage" />
-          <ProtectedRoute component={EditProfile} exact path="/EditProfile" />
+          <ProtectedRoute component={Main} exact path="/mainPage" />
+          <Route component={EditProfile} exact path="/EditProfile" />
 
         </Switch>
       </div>

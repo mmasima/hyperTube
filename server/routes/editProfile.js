@@ -21,32 +21,42 @@ router.post('/', auth, async function (req, res) {
     var password = req.body.password;
     var confirm = req.body.confirm;
     id = req.id;
+    try{
     if (username === '' && firstname === '' && lastname === '' && password === '' && confirm === '') {
         res.send(401);
         res.send();
         res.end();
     }
     else {
-        if (username != undefined) {
+        if (username != undefined && username !== "") {
             var check = await db.checkUserNameExists(username);
             if (check.length == 0) {
                 await db.edituserName(username, id);
             }
+            else {
+                console.log("username exists")
+
+            }
         }
-        if (firstname != undefined ) {
+        if (firstname != undefined && firstname !== "") {
             await db.EditFirstName(firstname, id);
             
         }
-        if (lastname != undefined) {
+        if (lastname != undefined && lastname != "") {
             await db.EditLastName(lastname, id);
         }
-        if (password != undefined && password === confirm) {
+        if (password != undefined && password === confirm &&  password !== "" && confirm !== "") {
             let newPassword = await bcrypt.hash(password, saltRound);
             await db.EditPassword(newPassword, id)
         }
         res.status(200).send();
         res.end();
     }
+}
+catch(error){
+    console.log("oops, something went wrong")
+    res.redirect('/');
+}
 
 
 });

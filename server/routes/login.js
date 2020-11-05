@@ -15,44 +15,54 @@ router.get('/', function (req, res) {
 router.post('/', async function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
+    try {
 
-    if (!username || !password) {
-        res.send(401);
-        res.end();
-    } else {
-        usernameExists = false;
-        var check = await db.checkUserNameExists(username);
-        if (check.length == 0) {
-            console.log("error logging in with username!")
-            res.send(401);
+        if (!username || !password) {
+            console.log("error in nothing inserted")
+            res.status(401)
+            history.push('/')
             res.end();
-        }
-        else {
-            bcrypt.compare(password, check[0].password, function (err, result) {
-                if (result == true) {
-                    var verify;
-                    check.forEach(element => {
+        } else {
+            usernameExists = false;
+            var check = await db.checkUserNameExists(username);
+            if (check.length === 0) {
+                console.log("error in no users")
+                res.status(401)
+                history.push('/')
+                res.end();
+            }
+            else {
+                bcrypt.compare(password, check[0].password, function (err, result) {
+                    if (result == true) {
+                        var verify;
+                        check.forEach(element => {
 
-                        if (username == element.username) {
-                            usernameExists = true;
-                            verify = check[0].verify;
-                        }
-                    });
-                    if (usernameExists == true && verify == 'yes') {
-                         var token = jwt.sign({id: check[0].id}, config.get('jwtSecret'), { expiresIn: 3600 });
+                            if (username == element.username) {
+                                usernameExists = true;
+                                verify = check[0].verify;
+                            }
+                        });
+                        if (usernameExists == true && verify == 'yes') {
+                            var token = jwt.sign({ id: check[0].id }, config.get('jwtSecret'), { expiresIn: 3600 });
                             res.status(200).send({
                                 token: token
                             });
-                        res.end()
+                            res.end()
 
-                    } else {
-                        console.log('activate your account');
-                        res.redirect('/');
-                        res.end();
+                        } else {
+                            console.log("error in password incorrect")
+                            res.status(401)
+                            history.push('/')
+                            res.end();
+                        }
                     }
-                }
-            });
+                });
+            }
         }
+    } catch (error) {
+        console.log("error in catch")
+        res.status(401)
+        history.push('/')
     }
 });
 

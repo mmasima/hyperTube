@@ -14,7 +14,7 @@ function EditProfile(props) {
         confirm: "",
         isLoaded: true
     })
-    
+
     const user = JSON.parse(localStorage.getItem("userDetails"));
 
     const history = useHistory();
@@ -46,6 +46,7 @@ function EditProfile(props) {
             .then((res) => {
                 if (res.status === 401) {
                     console.log("it didnt work")
+                    history.push('mainPage');
                 }
                 else if (res.status === 200) {
                     history.push('mainPage');
@@ -89,16 +90,12 @@ function EditProfile(props) {
                     </button>
                 </div>
             </nav>
-            {   state.isLoaded === false ?
-                <div className="spinner-grow" role="status">
-                <span className="sr-only">Loading...</span>
-              </div>
-            :
+
             <div className="container mt-5">
                 <div className="row">
-                    <div className="col">
+                    <div className="col-lg-6">
                         <div className="row justify-content-center">
-                            <div className=" col-lg-6 card text-align-center">
+                            <div className="card text-align-center">
                                 <img src={userImage} height="200px" width="150px" className="card-img-top" alt={userImage} />
                                 <label >change image</label>
                                 <input type="file" className="form-control" name="image" onChange={fileSelectedHandler} />
@@ -115,6 +112,8 @@ function EditProfile(props) {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="col-lg-6">
                         <form onSubmit={submit}>
                             <div className="form-row">
                                 <div className="col-md-6 mb-3">
@@ -147,9 +146,8 @@ function EditProfile(props) {
                     </div>
                 </div>
             </div>
-        }
         </div>
-            
+
     )
 }
 

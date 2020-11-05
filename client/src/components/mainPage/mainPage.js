@@ -26,7 +26,7 @@ class Main extends Component {
       setVideo: "",
       comments: [],
       isOpen: false,
-      cookie: Cookies.get('hypertube'),
+      cookie: Cookies.get(),
       isLoaded: true
     }
   }
@@ -54,13 +54,15 @@ class Main extends Component {
     fetch(`https://yts.mx/api/v2/list_movies.json=?query_term=${this.state.searchTerm}`)
       .then(data => data.json())
       .then(data => {
-        this.setState({ movies: [...data.data.movies], totalResults: data.data.movie_count, isLoaded: true })
+        if(data.data.movies)
+          this.setState({ movies: [...data.data.movies], totalResults: data.data.movie_count, isLoaded: true })
+        else{
+          window.location.reload(false);
+        }
       })
   }
 
   handleChange = (e) => {
-    
-    console.log(this.state.cookie)
     this.setState({ searchTerm: e.target.value });
   }
 

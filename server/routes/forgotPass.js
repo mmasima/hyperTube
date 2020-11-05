@@ -12,6 +12,7 @@ router.post('/', async function (req, res) {
     var email = req.body.email;
     if (!email) {
         res.status("401");
+        history.push('/')
         res.end();
     }
     else {
@@ -53,14 +54,17 @@ router.post('/', async function (req, res) {
                     if (error) {
                         console.log("error sending to email");
                         console.log(error);
+                        history.push('/')
                     } else {
                         console.log('Email sent: ' + info.response);
+                        history.push('/')
 
                     }
                 })
             }
         } catch (error) {
             console.log(error.message);
+            history.push('/')
         }
     }
 })

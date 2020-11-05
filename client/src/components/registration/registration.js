@@ -27,20 +27,20 @@ function Registration() {
   const history = useHistory();
   const submit = e => {
     e.preventDefault()
-    if(state.password.length < 8)
-    toast('Listen to the errors Buddy !')
+    if (state.password.length < 8)
+      toast('Listen to the errors Buddy !')
     else
-    registerApi(state.username, state.firstname, state.lastname, state.email, state.password, state.confirm)
-      .then(res => {
-        console.log(`req successful ${res.status}`);
-        if (res.status === 401)
-          history.push('/register')
-        else if (res.status === 200) {
-          history.push('/')
-        }
+      registerApi(state.username, state.firstname, state.lastname, state.email, state.password, state.confirm)
+        .then(res => {
+          console.log(`req successful ${res.status}`);
+          if (res.status === 401)
+            history.push('/register')
+          else if (res.status === 200) {
+            history.push('/')
+          }
 
-      })
-      .catch(error => console.log(error))
+        })
+        .catch(error => console.log(error))
 
   }
   const handleChange = (e) => {
@@ -51,7 +51,7 @@ function Registration() {
       [e.target.name]: e.target.value,
     });
   }
-  
+
 
   const handleChangey = (e) => {
     e.persist();
@@ -59,20 +59,20 @@ function Registration() {
     let errors = state.errors;
 
     switch (name) {
-      case 'fullName': 
-        errors.fullName = 
+      case 'fullName':
+        errors.fullName =
           value.length < 5
             ? 'Full Name must be 5 characters long!'
             : '';
         break;
-      case 'email': 
-        errors.email = 
+      case 'email':
+        errors.email =
           validEmailRegex.test(value)
             ? ''
             : 'Email is not valid!';
         break;
-      case 'password': 
-        errors.password = 
+      case 'password':
+        errors.password =
           value.length < 8
             ? 'Password must be 8 characters long!'
             : '';
@@ -119,9 +119,9 @@ function Registration() {
                   <div className="form-group row">
                     <div className="col-sm-10 col-lg-10">
                       <label for="userName">Name</label>
-                      <input value={state.firstname} onChange={handleChangey} type="text" className="form-control" id="Name" name="firstname" placeholder="enter name" required noValidate/>
-                      {state.errors.fullName.length > 0 && 
-                          <span className='error'>{state.errors.fullName}</span>}
+                      <input value={state.firstname} onChange={handleChangey} type="text" className="form-control" id="Name" name="firstname" placeholder="enter name" required noValidate />
+                      {state.errors.fullName.length > 0 &&
+                        <span className='error'>{state.errors.fullName}</span>}
                     </div>
                   </div>
                   <div className="form-group row">
@@ -129,8 +129,8 @@ function Registration() {
                       <label for="UserLastName">lastname</label>
                       <input value={state.lastname} onChange={handleChangey} type="text" className="form-control" id="lastname" placeholder="enter last name" name="lastname"
                         required noValidate />
-                        {state.errors.fullName.length > 0 && 
-                          <span className='error'>{state.errors.fullName}</span>}
+                      {state.errors.fullName.length > 0 &&
+                        <span className='error'>{state.errors.fullName}</span>}
                     </div>
                   </div>
                   <div className="form-group row">
@@ -138,7 +138,7 @@ function Registration() {
                       <label for="UserEmail">email</label>
                       <input value={state.email} onChange={handleChangey} type="email" className="form-control" id="email" placeholder="enter email" name="email"
                         required />
-                        {state.errors.email.length > 0 && 
+                      {state.errors.email.length > 0 &&
                         <span className='error'>{state.errors.email}</span>}
                     </div>
                   </div>
@@ -148,8 +148,8 @@ function Registration() {
                       <label for="Password">Password</label>
                       <input value={state.password} type="password" className="form-control" id="password" placeholder="enter Password"
                         name="password" onChange={handleChangey} title="Must have digits, caps and small letters" require="true" />
-                        {state.errors.password.length > 0 && 
-                          <span className='error'>{state.errors.password}</span>}
+                      {state.errors.password.length > 0 &&
+                        <span className='error'>{state.errors.password}</span>}
                     </div>
                     <div className="col-sm-10 col-lg-6">
                       <label for="Password">confirm password</label>

@@ -24,7 +24,7 @@ function ResetPass(props) {
                 if (res.status === 401)
                     history.push('/password')
                 else if (res.status === 200)
-                    history.push('/login')
+                    history.push('/')
 
             })
             .catch(error => console.log(error))
