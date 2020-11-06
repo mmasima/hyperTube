@@ -34,11 +34,11 @@ class Main extends Component {
 
   download = async () => {
 
+    toast.warn('Your Movie is Downloading !')
     await axios.get(`http://localhost:5000/torrent?url=${this.state.currentMovie.torrents[0].url}&id=${this.state.currentMovie.id}&title=${this.state.currentMovie.title}`, {
     
     }).then(res => {
       console.log('res.data', res.data);
-      toast.warn('Your Movie is Downloading !')
       if (res.data.message) {
         this.videoplay = `http://localhost:5000/torrent/video?movie=${res.data.message}`
         let nameonly = res.data.message
@@ -208,7 +208,7 @@ class Main extends Component {
                     <div className="card-body">
                       <h5 className="card-title">{this.state.currentMovie.year}</h5>
                       <React.Fragment>
-                        <ModalVideo channel='custom' height="200px" width="150px" url={this.videoplay} autoplay isOpen={this.state.isOpen} onClose={() => this.isOpen = false} />
+                        <ModalVideo channel='custom' height="100px" width="100px" url={this.videoplay} autoplay isOpen={this.state.isOpen} onClose={() => this.isOpen = false} />
                         <button className="btn-primary" onClick={this.MoviePlayable}>Play</button>
                       </React.Fragment>
                       <label >year released</label>
